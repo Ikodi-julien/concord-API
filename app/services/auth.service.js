@@ -20,7 +20,7 @@ const auth = {
             httpOnly: true,
             sameSite: 'None',
             secure: true,
-            domain : '.teacup-back.herokuapp.com'
+            domain : 'chat-api-ikodi.herokuapp.com'
         } :
         {
             httpOnly: true,
