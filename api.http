@@ -1,0 +1,127 @@
+### GET /v1/login (success)
+POST http://localhost:8000/v1/login
+Content-Type: application/json
+
+{
+    "email" : "testeur@testmail.com",
+    "password" : "7357"
+}
+
+### GET /v1/login (error, email missing)
+POST http://localhost:8000/v1/login
+Content-Type: application/json
+
+{
+    "password" : "G PA DINSPI"
+}
+
+### GET /v1/login (error, password missing)
+POST http://localhost:8000/v1/login
+Content-Type: application/json
+
+{
+    "email" : "tructrucbis@gmail.com"
+}
+
+### GET /v1/login (error, user does not exist)
+POST http://localhost:8000/v1/login
+Content-Type: application/json
+
+{
+    "email" : "trucmachin@gmail.com",
+    "password" : "G PA DINSPI"
+}
+
+### GET /v1/login (error, incorrect password)
+POST http://localhost:8000/v1/login
+Content-Type: application/json
+
+{
+    "email" : "tructrucbis@gmail.com",
+    "password" : "G (toujours) PA DINSPI"
+}
+
+#------------------------------------------------
+
+### GET /v1/channel/:id (success)
+GET http://localhost:8000/v1/channel/1
+Content-Type: application/json
+
+### GET /v1/channel/:id (404)
+GET http://localhost:8000/v1/channel/1000
+
+### GET /v1/channel/:id (express' 404)
+GET http://localhost:8000/v1/channel/un
+
+#------------------------------------------------
+
+### GET /v1/user/:id (success)
+GET http://localhost:8000/v1/user/1
+
+### GET /v1/user/:id (404)
+GET http://localhost:8000/v1/user/1000
+
+#------------------------------------------------
+
+### GET /v1/tags (success)
+GET http://localhost:8000/v1/tags
+
+#------------------------------------------------
+
+### GET /v1/tags/channels (success)
+GET http://localhost:8000/v1/tags/channels
+
+#------------------------------------------------
+
+### GET /v1/channels (success)
+GET http://localhost:8000/v1/channels
+
+#------------------------------------------------
+
+### GET /v1/signup (success)
+POST http://localhost:8000/v1/signup
+Content-Type: application/json
+
+{
+    "email" : "tructructer@gmail.com",
+    "password" : "G PA DINSPI",
+    "nickname" : "loulou"
+}
+
+### GET /v1/signup (error, email missing)
+POST http://localhost:8000/v1/signup
+Content-Type: application/json
+
+{
+    "password" : "G PA DINSPI",
+    "nickname" : "loulou"
+}
+
+### GET /v1/signup (error, password missing)
+POST http://localhost:8000/v1/signup
+Content-Type: application/json
+
+{
+    "email" : "pwin@gmail.com",
+    "nickname" : "loulou"
+}
+
+### GET /v1/signup (error, email already used)
+POST http://localhost:8000/v1/signup
+Content-Type: application/json
+
+{
+    "email" : "tructrucbis@gmail.com",
+    "password" : "G PA DINSPI",
+    "nickname" : "loulou"
+}
+
+### GET /v1/signup (error, email value is incorrect)
+POST http://localhost:8000/v1/signup
+Content-Type: application/json
+
+{
+    "email" : "pwin",
+    "password" : "G PA DINSPI",
+    "nickname" : "loulou"
+}

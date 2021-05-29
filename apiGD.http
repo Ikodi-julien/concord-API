@@ -1,0 +1,49 @@
+### PATCH /v1/me
+PATCH http://localhost:5435/v1/me
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTMsImlhdCI6MTYyMTQ5OTYzNCwiZXhwIjoxNjIxNDk5Njk0fQ.29nf9bF6MGwAAlAZqh_MxoJ-xLSEEIs222tB_jxXQnE
+refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTMsImlhdCI6MTYyMTQ5OTYzNCwiZXhwIjoxNjIxNDk5OTM0fQ.FBBnaCkIVdND9I-7VtyVRgKVYWFg5cBrmorami8seqg
+Content-Type: application/json
+
+{
+    "email" : "lulu@lulu.com",
+    "password" : "lolo",
+    "newPassword" : "lulu",
+    "userId" : 53
+}
+
+#------------------------------------------------
+
+### GET /v1/login
+POST http://localhost:5435/v1/login
+Content-Type: application/json
+
+{
+    "email" : "lulu@lulu.com",
+    "password" : "lolo"
+}
+
+#------------------------------------------------
+
+### GET /v1/channel/:id (try to access to a resource)
+GET http://localhost:5435/v1/channel/1
+Content-Type: application/json
+
+#------------------------------------------------
+
+### GET /v1/logout
+POST http://localhost:5435/v1/logout
+Content-Type: application/json
+
+{
+    "id" : 51
+}
+
+### GET /v1/signup (error, email missing)
+POST http://localhost:5435/v1/signup
+Content-Type: application/json
+
+{
+    "email" : "poussin@gmail.com",
+    "password" : "piou",
+    "nickname": "poussinpiou"
+}

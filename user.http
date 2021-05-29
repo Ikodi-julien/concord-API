@@ -1,0 +1,106 @@
+### GET /v1/me 
+GET http://localhost:8000/v1/me
+Content-Type: application/json
+
+#------------------------------------------------
+
+### GET /v1/me/channels
+GET http://localhost:8000/v1/me/channels
+Content-Type: application/json
+
+#------------------------------------------------
+
+### DELETE /v1/me/channels/:id
+DELETE http://localhost:8000/v1/me/channels/11
+Content-Type: application/json
+
+### DELETE /v1/me/channels/:id
+DELETE http://localhost:8000/v1/me/channels/10
+Content-Type: application/json
+
+### DELETE /v1/me/channels/:id
+DELETE http://localhost:8000/v1/me/channels/1000
+Content-Type: application/json
+
+#------------------------------------------------
+
+### GET /v1/me/recommended 
+GET http://localhost:8000/v1/me/recommended
+Content-Type: application/json
+
+#------------------------------------------------
+
+### PATCH /v1/me (success) update all
+PUT http://localhost:8000/v1/me
+Content-Type: application/json
+
+{
+    "email" : "supahaka@testmail.com",
+    "nickname" : "SUPAHAKA2",
+    "tags" : []
+
+}
+
+### PUT /v1/me (success) update just tags
+PUT http://localhost:8000/v1/me
+Content-Type: application/json
+
+{
+    "tags" : [1, 10, 11, 14, 18, 8, 23, 24]
+
+}
+
+### PUT /v1/me (success) update just email
+PUT http://localhost:8000/v1/me
+Content-Type: application/json
+
+{
+    "email" : "supahaka@testmail.com"
+}
+
+### PUT /v1/me (email already exist) // email has to be changed
+PUT http://localhost:8000/v1/me
+Content-Type: application/json
+
+{
+    "email" : "supahaka@testmail.com"
+}
+
+#------------------------------------------------
+
+### PATCH /v1/me (success)
+PATCH http://localhost:8000/v1/me
+Content-Type: application/json
+
+{
+    "password" : "test",
+    "newPassword" : "test"
+
+}
+
+### PATCH /v1/me (missing old password)
+PATCH http://localhost:8000/v1/me
+Content-Type: application/json
+
+{
+    "newPassword" : "supahaka@testmail.com"
+}
+
+### PATCH /v1/me (old password incorrect)
+PATCH http://localhost:8000/v1/me
+Content-Type: application/json
+
+{
+    "password" : "supahaka@testmail.com",
+    "newPassword" : "test"
+}
+
+#------------------------------------------------
+
+### DELETE /v1/me (success)
+DELETE http://localhost:8000/v1/me
+Content-Type: application/json
+
+### DELETE /v1/me (deletion of inexistant user)
+DELETE http://localhost:8000/v1/me
+Content-Type: application/json

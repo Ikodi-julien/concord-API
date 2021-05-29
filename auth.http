@@ -1,0 +1,24 @@
+### GET /v1/login
+POST http://localhost:8000/v1/login
+Content-Type: application/json
+
+{
+    "email" : "supahaka@testmail.com",
+    "password" : "test"
+}
+
+#------------------------------------------------
+
+### GET /v1/channels (try to access to a resource)
+GET http://localhost:8000/v1/channels
+Content-Type: application/json
+
+#------------------------------------------------
+
+### GET /v1/logout
+POST http://localhost:8000/v1/logout
+Content-Type: application/json
+
+{
+    "id" : 51
+}
