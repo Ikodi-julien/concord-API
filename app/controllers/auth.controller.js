@@ -5,8 +5,7 @@ const { User, Channel } = require("../models");
 const authService = require('../services/auth.service');
 
 const SALT_ROUNDS = 10;
-const JWT_SECRET = 'PKu6KAcMUtTy0YgKzxZ1mvOQFJnnpyYrl6nyRzTxViOXyhFD/ARdWmNGxINwP4UX0SmfCB0cRDloKM75fYfvuzxmvQTGdV1Vc7QOWlcZv//oGaq/eWz47KIA3Udn5gxclnpuAd4wNjo5EeS6FV4T22+SymIZC/pf4bWB8gu2z+VIUSEOl3bdzA5+RafBMgp5vBDYe7qpr4wzLEffRLSL7u/vv9FNzyC9zPLG2EV0BH3hiifTNE2J2RWmNQfqHnMKgLLph1K9fmr92y4xJxtBwE/ZCrC4HWXo3t+JPExxRknrFW8fC0ogET1asgwymyJgdfpW2duLRid0vHVjme82MQ=='
-
+const JWT_SECRET = require('../services/JWT_SECRET');
 
 const authController = {
     /**
