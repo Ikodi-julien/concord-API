@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const authService = require('../services/auth.service');
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = require('../services/JWT_SECRET');
 
 const verifyJWT = async (req, res, next) => {
 
