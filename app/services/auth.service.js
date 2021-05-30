@@ -6,7 +6,7 @@ const asyncClient = require('../redisClient');
 const PREFIX = "teacup:";
 // use the command underneath to generate a jwt secret key and then, store it your own .env
 // node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = require('./JWT_SECRET');
 
 const jwtExpiration = process.env.NODE_ENV === 'production' ?
     60 * 5 : 60;
@@ -20,7 +20,7 @@ const auth = {
             httpOnly: true,
             sameSite: 'None',
             secure: true,
-            domain : '.teacup-back.herokuapp.com'
+            domain : 'chat-api-ikodi.herokuapp.com'
         } :
         {
             httpOnly: true,

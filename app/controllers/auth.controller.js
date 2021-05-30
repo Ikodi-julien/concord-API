@@ -5,8 +5,7 @@ const { User, Channel } = require("../models");
 const authService = require('../services/auth.service');
 
 const SALT_ROUNDS = 10;
-const JWT_SECRET = process.env.JWT_SECRET
-
+const JWT_SECRET = require('../services/JWT_SECRET');
 
 const authController = {
     /**
@@ -52,6 +51,10 @@ const authController = {
             return res.json(newUser);
         } catch (error) {
             const message = error.parent?.detail || error.message
+<<<<<<< HEAD
+=======
+            console.log(error);
+>>>>>>> master
             res.status(500).json({ message });
         }
     },
