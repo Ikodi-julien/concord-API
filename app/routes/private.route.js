@@ -8,6 +8,7 @@ router.get('/me', userController.profile)
 router.put('/me', userController.update);
 // [patch] route for update user
 router.patch('/me', userController.updatePassword);
+router.put('/me/avatar', userController.updateAvatar);
 // [delete] route for delete user
 router.delete('/me', userController.delete);
 router.get('/me/channels', userController.getUserChannels);
