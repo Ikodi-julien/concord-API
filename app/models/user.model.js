@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes, Model) => {
 
     User.init({
         avatar: {
-            type: DataTypes.BLOB,
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         nickname: {
