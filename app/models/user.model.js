@@ -3,6 +3,10 @@ module.exports = (sequelize, DataTypes, Model) => {
     class User extends Model { };
 
     User.init({
+        avatar: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         nickname: {
             type: DataTypes.TEXT,
             allowNull: false

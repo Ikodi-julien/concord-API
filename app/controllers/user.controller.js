@@ -50,6 +50,29 @@ const userController = {
         }
     },
 
+    updateAvatar: async (req, res) => {
+        const id = req.userId;
+        const { avatar } = req.body;
+
+        try {
+
+            const user = await User.findByPk(id);
+
+            if (!user) {
+                return res.status(400).json({ message: "No user found." });
+            }
+
+            await user.update({ avatar });
+
+            await user.reload();
+
+            res.status(200).json(user);
+        } catch (error) {
+            const message = error.parent.detail || error.message;
+            res.status(500).json({ message });
+        }
+    },
+
     updatePassword: async (req, res) => {
         // on récupère l'ancien mot de passe dans req.body
         const { password, newPassword } = req.body;
