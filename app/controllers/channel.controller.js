@@ -10,7 +10,7 @@ const channelController = {
             const channel = await Channel.findByPk(req.params.id, {
                 include: {
                     association: 'users',
-                    attributes: ['id', 'nickname', 'isLogged'],
+                    attributes: ['id', 'avatar', 'nickname', 'isLogged'],
                     through: {
                         attributes: []
                     }

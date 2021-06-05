@@ -51,10 +51,6 @@ const authController = {
             return res.json(newUser);
         } catch (error) {
             const message = error.parent?.detail || error.message
-<<<<<<< HEAD
-=======
-            console.log(error);
->>>>>>> master
             res.status(500).json({ message });
         }
     },
