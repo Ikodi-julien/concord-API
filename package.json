@@ -11,7 +11,7 @@
     "start-new-db": "node ./data/db-generate.js && node index.js",
     "dev": "node index.js"
   },
-  "author": "VainKate & guillaume67450",
+  "author": "VainKate, guillaume67450 and ikodi-julien",
   "license": "ISC",
   "dependencies":
   {
