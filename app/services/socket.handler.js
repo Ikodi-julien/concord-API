@@ -1,4 +1,4 @@
-const { Channel, User } = require('../models');
+const { Channel, Message } = require('../models');
 const usersStatus = require('./usersStatus.service');
 
 const socketHandler = {
@@ -54,8 +54,8 @@ const socketHandler = {
         })
     },
 
-    message: (socket, io) => {
-        socket.on('message', message => {
+    message:  (socket, io) => {
+        socket.on('message', async (message) => {
             /*
             {
                 id : string (messageId) (have to be send)
@@ -72,6 +72,20 @@ const socketHandler = {
             message.id = `${message.user.id}-${Date.now()}`
 
             io.to(`channel-${message.channel.id}`).emit('message', message);
+            
+            // Insert each message received in Message table
+            Message.create({
+                content: message.content,
+                user_id: message.user.id,
+                channel_id: message.channel.id,
+            })
+            .then (message => {
+                message.save()
+            })
+            .catch (err => {
+            socket.emit('error', err);
+            console.error(err)
+            })
         })
     },
 
