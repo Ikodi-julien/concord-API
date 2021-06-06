@@ -1,6 +1,14 @@
 const { sequelize, Channel, Tag, User, Message } = require('../app/models')
 const bcrypt = require('bcrypt')
-const faker = require('faker')
+const faker = require('faker');
+
+const avatar_1 = require('./avatar_1');
+const avatar_2 = require('./avatar_2');
+const avatar_3 = require('./avatar_3');
+const avatar_4 = require('./avatar_4');
+const avatar_5 = require('./avatar_5');
+const avatar_6 = require('./avatar_6');
+const avatarList = [avatar_1, avatar_2, avatar_3, avatar_4, avatar_5, avatar_6];
 
 faker.locale = 'fr'
 faker.seed(999)
@@ -170,6 +178,7 @@ const SALT_ROUNDS = 10
         email: faker.internet.email(),
         password: await bcrypt.hash(faker.internet.password(), SALT_ROUNDS),
         nickname: faker.internet.userName(),
+        avatar: avatarList[Math.floor(Math.random() * 6)],
       })
 
       // Add  random tags to user
@@ -259,6 +268,15 @@ const SALT_ROUNDS = 10
     }
 
     await testUser.save()
+    
+    const bob = await User.create({
+      email: 'bob@bob.fr',
+      password: await bcrypt.hash('bob', SALT_ROUNDS),
+      nickname: 'bob',
+      avatar: avatarList[Math.floor(Math.random() * 6)],
+    })
+    await bob.save()
+    
   } catch (err) {
     console.error('>> Error while creating: ', err)
   } finally {
