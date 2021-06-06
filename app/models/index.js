@@ -4,6 +4,7 @@ const sequelize = require('../database')
 const Channel = require('./channel.model')(sequelize, Sequelize, Model);
 const Tag = require('./tag.model')(sequelize, Sequelize, Model);
 const User = require('./user.model')(sequelize, Sequelize, Model);
+const Message = require('./message.model')(sequelize, Sequelize, Model);
 
 // ---------------------
 
@@ -53,9 +54,23 @@ Channel.belongsToMany(Tag, {
     through: 'channel_has_tag'
 });
 
+// --------------------
+
+Channel.hasMany(Message, {
+    foreignKey: 'channel_id',
+})
+
+User.hasMany(Message, {
+    foreignKey: 'user_id',
+})
+
+Message.belongsTo(Channel);
+Message.belongsTo(User);
+
 module.exports = {
     sequelize,
     Channel,
     Tag,
-    User
+    User,
+    Message,
 };
