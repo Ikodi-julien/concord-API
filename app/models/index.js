@@ -58,14 +58,20 @@ Channel.belongsToMany(Tag, {
 
 Channel.hasMany(Message, {
     foreignKey: 'channel_id',
+    as: 'channel_messages',
 })
 
 User.hasMany(Message, {
     foreignKey: 'user_id',
+    as: 'user_messages',
 })
 
-Message.belongsTo(Channel);
-Message.belongsTo(User);
+Message.belongsTo(Channel, {
+    as: 'channel',
+});
+Message.belongsTo(User, {
+    as: 'user',
+});
 
 module.exports = {
     sequelize,

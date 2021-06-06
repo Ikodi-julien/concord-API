@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes, Model) => {
     
     Message.init({
         content: {
-            type: DataTypes.TEXT,
+            type: DataTypes.JSON,
             allowNull: false
         },
     }, {
