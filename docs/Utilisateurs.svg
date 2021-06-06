@@ -1,0 +1,131 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="376" height="279" view_box="0 0 376 279"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 le Sun, 06 Jun 2021 00:34:18</desc>
+
+<rect id="frame" x="0" y="0" width="376" height="279" fill="#ffffbf" stroke="none" stroke-width="0"/>
+
+<!-- Association CONTIENT -->
+<line x1="301" y1="135" x2="168" y2="135" stroke="#74add1" stroke-width="2"/>
+<text x="227" y="152.0" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<line x1="55" y1="135" x2="168" y2="135" stroke="#74add1" stroke-width="2"/>
+<text x="87" y="152.0" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-CONTIENT">
+	<path d="M 193 110 a 14 14 90 0 1 14 14 V 135 h -78 V 124 a 14 14 90 0 1 14 -14" fill="#abd9e9" stroke="#abd9e9" stroke-width="0"/>
+	<path d="M 207 135.0 v 11 a 14 14 90 0 1 -14 14 H 143 a 14 14 90 0 1 -14 -14 V 135.0 H 78" fill="#e0f3f8" stroke="#e0f3f8" stroke-width="0"/>
+	<rect x="129" y="110" width="78" height="50" fill="none" rx="14" stroke="#74add1" stroke-width="2"/>
+	<line x1="129" y1="135" x2="207" y2="135" stroke="#74add1" stroke-width="1"/>
+	<text x="136" y="127.7" fill="#000000" font-family="Verdana" font-size="12">CONTIENT</text>
+</g>
+
+<!-- Association SALON_MSG -->
+<line x1="55" y1="135" x2="55" y2="236" stroke="#74add1" stroke-width="2"/>
+<text x="60.0" y="177" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<line x1="168" y1="236" x2="55" y2="236" stroke="#74add1" stroke-width="2"/>
+<text x="107" y="253.0" fill="#d73027" font-family="Verdana" font-size="12">1,1</text>
+<g id="association-SALON_MSG">
+	<path d="M 87 211 a 14 14 90 0 1 14 14 V 236 h -92 V 225 a 14 14 90 0 1 14 -14" fill="#abd9e9" stroke="#abd9e9" stroke-width="0"/>
+	<path d="M 101 236.0 v 11 a 14 14 90 0 1 -14 14 H 23 a 14 14 90 0 1 -14 -14 V 236.0 H 92" fill="#e0f3f8" stroke="#e0f3f8" stroke-width="0"/>
+	<rect x="9" y="211" width="92" height="50" fill="none" rx="14" stroke="#74add1" stroke-width="2"/>
+	<line x1="9" y1="236" x2="101" y2="236" stroke="#74add1" stroke-width="1"/>
+	<text x="16" y="228.7" fill="#000000" font-family="Verdana" font-size="12">SALON_MSG</text>
+</g>
+
+<!-- Association DEFINIT2 -->
+<line x1="55" y1="135" x2="55" y2="34" stroke="#74add1" stroke-width="2"/>
+<text x="60.0" y="102" fill="#d73027" font-family="Verdana" font-size="12">1,N</text>
+<line x1="168" y1="34" x2="55" y2="34" stroke="#74add1" stroke-width="2"/>
+<text x="122" y="51.0" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-DEFINIT2">
+	<path d="M 74 9 a 14 14 90 0 1 14 14 V 34 h -66 V 23 a 14 14 90 0 1 14 -14" fill="#abd9e9" stroke="#abd9e9" stroke-width="0"/>
+	<path d="M 88 34.0 v 11 a 14 14 90 0 1 -14 14 H 36 a 14 14 90 0 1 -14 -14 V 34.0 H 66" fill="#e0f3f8" stroke="#e0f3f8" stroke-width="0"/>
+	<rect x="22" y="9" width="66" height="50" fill="none" rx="14" stroke="#74add1" stroke-width="2"/>
+	<line x1="22" y1="34" x2="88" y2="34" stroke="#74add1" stroke-width="1"/>
+	<text x="29" y="26.7" fill="#000000" font-family="Verdana" font-size="12">DEFINIT</text>
+</g>
+
+<!-- Association DEFINIT -->
+<line x1="301" y1="135" x2="301" y2="34" stroke="#74add1" stroke-width="2"/>
+<text x="306.0" y="76" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<line x1="168" y1="34" x2="301" y2="34" stroke="#74add1" stroke-width="2"/>
+<text x="192" y="51.0" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-DEFINIT">
+	<path d="M 320 9 a 14 14 90 0 1 14 14 V 34 h -66 V 23 a 14 14 90 0 1 14 -14" fill="#abd9e9" stroke="#abd9e9" stroke-width="0"/>
+	<path d="M 334 34.0 v 11 a 14 14 90 0 1 -14 14 H 282 a 14 14 90 0 1 -14 -14 V 34.0 H 66" fill="#e0f3f8" stroke="#e0f3f8" stroke-width="0"/>
+	<rect x="268" y="9" width="66" height="50" fill="none" rx="14" stroke="#74add1" stroke-width="2"/>
+	<line x1="268" y1="34" x2="334" y2="34" stroke="#74add1" stroke-width="1"/>
+	<text x="275" y="26.7" fill="#000000" font-family="Verdana" font-size="12">DEFINIT</text>
+</g>
+
+<!-- Association UTILISATEUR_MSG -->
+<line x1="168" y1="236" x2="301" y2="236" stroke="#74add1" stroke-width="2"/>
+<text x="208" y="253.0" fill="#d73027" font-family="Verdana" font-size="12">1,1</text>
+<line x1="301" y1="135" x2="301" y2="236" stroke="#74add1" stroke-width="2"/>
+<text x="306.0" y="203" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-UTILISATEUR_MSG">
+	<path d="M 353 211 a 14 14 90 0 1 14 14 V 236 h -132 V 225 a 14 14 90 0 1 14 -14" fill="#abd9e9" stroke="#abd9e9" stroke-width="0"/>
+	<path d="M 367 236.0 v 11 a 14 14 90 0 1 -14 14 H 249 a 14 14 90 0 1 -14 -14 V 236.0 H 132" fill="#e0f3f8" stroke="#e0f3f8" stroke-width="0"/>
+	<rect x="235" y="211" width="132" height="50" fill="none" rx="14" stroke="#74add1" stroke-width="2"/>
+	<line x1="235" y1="236" x2="367" y2="236" stroke="#74add1" stroke-width="1"/>
+	<text x="242" y="228.7" fill="#000000" font-family="Verdana" font-size="12">UTILISATEUR_MSG</text>
+</g>
+
+<!-- Entity MESSAGE -->
+<g id="entity-MESSAGE">
+	<g id="frame-MESSAGE">
+		<rect x="133" y="202" width="70" height="25" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
+		<rect x="133" y="227.0" width="70" height="43" fill="#fee090" stroke="#fee090" stroke-width="0"/>
+		<rect x="133" y="202" width="70" height="68" fill="none" stroke="#f46d43" stroke-width="2"/>
+		<line x1="133" y1="227" x2="203" y2="227" stroke="#f46d43" stroke-width="1"/>
+	</g>
+	<text x="138" y="219.7" fill="#000000" font-family="Verdana" font-size="12">MESSAGE</text>
+	<text x="138" y="244.8" fill="#000000" font-family="Verdana" font-size="12">date</text>
+	<line x1="138" y1="247" x2="166" y2="247" stroke="#000000" stroke-width="1"/>
+	<text x="138" y="261.8" fill="#000000" font-family="Verdana" font-size="12">contenu</text>
+</g>
+
+<!-- Entity SALON -->
+<g id="entity-SALON">
+	<g id="frame-SALON">
+		<rect x="28" y="110" width="54" height="25" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
+		<rect x="28" y="135.0" width="54" height="25" fill="#fee090" stroke="#fee090" stroke-width="0"/>
+		<rect x="28" y="110" width="54" height="50" fill="none" stroke="#f46d43" stroke-width="2"/>
+		<line x1="28" y1="135" x2="82" y2="135" stroke="#f46d43" stroke-width="1"/>
+	</g>
+	<text x="33" y="127.7" fill="#000000" font-family="Verdana" font-size="12">SALON</text>
+	<text x="33" y="152.8" fill="#000000" font-family="Verdana" font-size="12">titre</text>
+	<line x1="33" y1="155" x2="59" y2="155" stroke="#000000" stroke-width="1"/>
+</g>
+
+<!-- Entity TAG -->
+<g id="entity-TAG">
+	<g id="frame-TAG">
+		<rect x="149" y="9" width="38" height="25" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
+		<rect x="149" y="34.0" width="38" height="25" fill="#fee090" stroke="#fee090" stroke-width="0"/>
+		<rect x="149" y="9" width="38" height="50" fill="none" stroke="#f46d43" stroke-width="2"/>
+		<line x1="149" y1="34" x2="187" y2="34" stroke="#f46d43" stroke-width="1"/>
+	</g>
+	<text x="155" y="26.7" fill="#000000" font-family="Verdana" font-size="12">TAG</text>
+	<text x="154" y="51.8" fill="#000000" font-family="Verdana" font-size="12">nom</text>
+	<line x1="154" y1="54" x2="182" y2="54" stroke="#000000" stroke-width="1"/>
+</g>
+
+<!-- Entity UTILISATEUR -->
+<g id="entity-UTILISATEUR">
+	<g id="frame-UTILISATEUR">
+		<rect x="254" y="84" width="94" height="25" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
+		<rect x="254" y="109.0" width="94" height="77" fill="#fee090" stroke="#fee090" stroke-width="0"/>
+		<rect x="254" y="84" width="94" height="102" fill="none" stroke="#f46d43" stroke-width="2"/>
+		<line x1="254" y1="109" x2="348" y2="109" stroke="#f46d43" stroke-width="1"/>
+	</g>
+	<text x="259" y="101.7" fill="#000000" font-family="Verdana" font-size="12">UTILISATEUR</text>
+	<text x="259" y="126.7" fill="#000000" font-family="Verdana" font-size="12">email</text>
+	<line x1="259" y1="129" x2="293" y2="129" stroke="#000000" stroke-width="1"/>
+	<text x="259" y="143.8" fill="#000000" font-family="Verdana" font-size="12">mot de passe</text>
+	<text x="259" y="160.8" fill="#000000" font-family="Verdana" font-size="12">pseudo</text>
+	<text x="259" y="177.8" fill="#000000" font-family="Verdana" font-size="12">avatar</text>
+</g>
+</svg>

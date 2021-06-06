@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+  #mld .normal { }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>DEFINIT</span> (
+    <span class='foreign primary'>titre</span>,
+    <span class='foreign primary'>nom</span>
+  )
+</div>
+<!--
+<div>
+  <span class='relation'>TAG</span> (
+    <span class='primary'>nom</span>
+  )
+</div>
+-->
+<div>
+  <span class='relation'>DEFINIT</span> (
+    <span class='foreign primary'>email</span>,
+    <span class='foreign primary'>nom</span>
+  )
+</div>
+<!--
+<div>
+  <span class='relation'>SALON</span> (
+    <span class='primary'>titre</span>
+  )
+</div>
+-->
+<div>
+  <span class='relation'>CONTIENT</span> (
+    <span class='foreign primary'>email</span>,
+    <span class='foreign primary'>titre</span>
+  )
+</div>
+<div>
+  <span class='relation'>UTILISATEUR</span> (
+    <span class='primary'>email</span>,
+    <span class='normal'>mot de passe</span>,
+    <span class='normal'>pseudo</span>,
+    <span class='normal'>avatar</span>
+  )
+</div>
+<div>
+  <span class='relation'>MESSAGE</span> (
+    <span class='primary'>date</span>,
+    <span class='normal'>contenu</span>,
+    <span class='foreign'>titre</span>,
+    <span class='foreign'>email</span>
+  )
+</div>
+</div>
+</body>
+</html>

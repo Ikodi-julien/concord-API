@@ -8,13 +8,16 @@ const channelController = {
             const onlineList = await usersStatus.getOnlineList(`channel-${req.params.id}`);
 
             const channel = await Channel.findByPk(req.params.id, {
-                include: {
+                include: [{
                     association: 'users',
                     attributes: ['id', 'avatar', 'nickname', 'isLogged'],
                     through: {
                         attributes: []
                     }
-                }
+                }, {
+                    association: 'channel_messages',
+                    include: 'user',
+                }]
             });
 
             if (!channel) {
@@ -25,9 +28,23 @@ const channelController = {
                 user.isLogged = onlineList.includes(user.id.toString()) ? true : false;
             }
 
-            return res.json(channel);
+            // Prepare data for frontend
+            const formatedMessages = channel.channel_messages.map(message => ({
+                id: message.id,
+                content: message.content,
+                nickname: message.user.nickname,
+                avatar: message.user.avatar,
+            }))
+            
+            return res.json({
+                id: channel.id,
+                title: channel.title,
+                messages: formatedMessages,
+                users: channel.users,
+            });
 
         } catch (error) {
+            console.log(error);
             const message = error.parent?.detail || error.message
             res.status(500).json({ message });
         }

@@ -1,183 +1,38 @@
-const { sequelize, Channel, Tag, User } = require('../app/models')
+const { sequelize, Channel, Tag, User, Message } = require('../app/models')
 const bcrypt = require('bcrypt')
-const faker = require('faker')
+const faker = require('faker');
+
+const tags = require('./tags');
+const channels = require('./channels');
+const messages = require('./fakeMessages');
+const avatar_1 = require('./avatar_1');
+const avatar_2 = require('./avatar_2');
+const avatar_3 = require('./avatar_3');
+const avatar_4 = require('./avatar_4');
+const avatar_5 = require('./avatar_5');
+const avatar_6 = require('./avatar_6');
+const avatarList = [avatar_1, avatar_2, avatar_3, avatar_4, avatar_5, avatar_6];
 
 faker.locale = 'fr'
 faker.seed(999)
 
 const SALT_ROUNDS = 10
 
-// Don't forget to create a db first and set DATABASE_URL in your .env before running this file
+// Create a db first and set DATABASE_URL in your .env before running this file
 
 ;(async () => {
   try {
     await sequelize.sync({ force: true })
 
-    const createdTags = await Tag.bulkCreate([
-      { name: 'Cuisine' },
-      { name: 'Cinéma' },
-      { name: 'Horreur' },
-      { name: 'Variété française' },
-      { name: 'Catch' },
-      { name: 'Planche à voile' },
-      { name: 'Comédies Musicales' },
-      { name: 'Mangas/Animes' },
-      { name: 'Poterie' },
-      { name: 'Jeux Vidéos' },
-      { name: 'Action' },
-      { name: 'Jeux de cartes' },
-      { name: 'Jeux de société' },
-      { name: 'Romantique' },
-      { name: 'Séries TV' },
-      { name: 'Mignon' },
-      { name: 'Épique' },
-      { name: 'RPG' },
-      { name: 'Livres' },
-      { name: 'Stratégie' },
-      { name: 'Comédie' },
-      { name: 'Mystère' },
-      { name: 'Réflexion' },
-      { name: 'Enquête' },
-      { name: 'Sport' },
-      { name: 'Comics' },
-    ])
-
-    const channelMap = [
-      {
-        title: 'GLOW',
-        tags: [{ name: 'Séries TV' }, { name: 'Catch' }, { name: 'Comédie' }],
-      },
-      {
-        title: 'The walking dead',
-        tags: [
-          { name: 'Séries TV' },
-          { name: 'Horreur' },
-          { name: 'Action' },
-          { name: 'Comics' },
-        ],
-      },
-      {
-        title: "Jeux vidéos d'action",
-        tags: [{ name: 'Jeux Vidéos' }, { name: 'Action' }],
-      },
-      {
-        title: "Films d'action",
-        tags: [{ name: 'Films' }, { name: 'Action' }],
-      },
-      {
-        title: 'Cats',
-        tags: [{ name: 'Films' }, { name: 'Comédies Musicales' }],
-      },
-      {
-        title: 'School Live/Gakkougurashi',
-        tags: [
-          { name: 'Mignon' },
-          { name: 'Mangas/Animes' },
-          { name: 'Horreur' },
-        ],
-      },
-      {
-        title: 'Berserk',
-        tags: [
-          { name: 'Épique' },
-          { name: 'Mangas/Animes' },
-          { name: 'Horreur' },
-          { name: 'Action' },
-        ],
-      },
-      {
-        title: 'The Witcher',
-        tags: [
-          { name: 'Jeux Vidéos' },
-          { name: 'Séries TV' },
-          { name: 'Épique' },
-          { name: 'Action' },
-          { name: 'RPG' },
-          { name: 'Livres' },
-        ],
-      },
-      {
-        title: 'Magic',
-        tags: [
-          { name: 'Jeux de cartes' },
-          { name: 'Stratégie' },
-          { name: 'Réflexion' },
-        ],
-      },
-      {
-        title: "Let's create! Pottery VR",
-        tags: [{ name: 'Jeux Vidéos' }, { name: 'Poterie' }],
-      },
-      {
-        title: 'Danganronpa',
-        tags: [
-          { name: 'Jeux Vidéos' },
-          { name: 'Mangas/Animes' },
-          { name: 'Horreur' },
-          { name: 'Enquête' },
-          { name: 'Réflexion' },
-        ],
-      },
-      {
-        title: 'Crazy Ex-Girlfriend',
-        tags: [
-          { name: 'Série TV' },
-          { name: 'Comédies Musicales' },
-          { name: 'Comédie' },
-          { name: 'Romantique' },
-        ],
-      },
-      {
-        title: 'Dixit',
-        tags: [{ name: 'Jeux de société' }, { name: 'Réflexion' }],
-      },
-      {
-        title: 'Fiesta de los Muertos',
-        tags: [{ name: 'Jeux de société' }, { name: 'Réflexion' }],
-      },
-      {
-        title: 'Muertigos',
-        tags: [
-          { name: 'Jeux de société' },
-          { name: 'Réflexion' },
-          { name: 'Jeux Vidéos' },
-        ],
-      },
-      {
-        title: 'Portal',
-        tags: [{ name: 'Réflexion' }, { name: 'Jeux Vidéos' }],
-      },
-      {
-        title: 'Les pires horreurs en cuisine',
-        tags: [{ name: 'Cuisine' }, { name: 'Horreur' }],
-      },
-      {
-        title: 'Le meilleur du catch à coup de planche à voile !',
-        tags: [
-          { name: 'Catch' },
-          { name: 'Planche à voile' },
-          { name: 'Sport' },
-        ],
-      },
-      {
-        title: 'Phoenix Wright/Ace Attorney',
-        tags: [
-          { name: 'Jeux Vidéos' },
-          { name: 'Mangas/Animes' },
-          { name: 'Épique' },
-          { name: 'Enquête' },
-          { name: 'Réflexion' },
-        ],
-      },
-    ]
-
+    const createdTags = await Tag.bulkCreate(tags);
     const defaultChannels = createdTags.map((tag) => {
       return { title: tag.name, tags: [{ name: tag.name }] }
     })
 
     const createdChannels = []
 
-    for (const { title, tags } of [...channelMap, ...defaultChannels]) {
+    // This creates a channel in DB for each channel in channels and each tag.
+    for (const { title, tags } of [...channels, ...defaultChannels]) {
       const channel = await Channel.create({ title })
       const channelTags = []
 
@@ -194,14 +49,17 @@ const SALT_ROUNDS = 10
       createdChannels.push({ channel, tags: channelTags })
     }
 
-    for (let index = 0; index < 50; index++) {
+    // This creates 30 users
+    for (let index = 0; index < 30; index++) {
       const newUser = await User.create({
         email: faker.internet.email(),
         password: await bcrypt.hash(faker.internet.password(), SALT_ROUNDS),
         nickname: faker.internet.userName(),
+        avatar: avatarList[Math.floor(Math.random() * 6)],
       })
 
-      const tagCount = Math.round(Math.random() * (11 - 1) + 1)
+      // Add  random tags to user
+      const tagCount = Math.round(Math.random() * 5 + 1)
       const userTags = []
 
       for (let index = 1; index <= tagCount; index++) {
@@ -216,8 +74,8 @@ const SALT_ROUNDS = 10
         }
       }
 
+      // Search for channels with the same tags as the user
       const recommendedChannels = []
-      const otherChannels = []
 
       for (const userTag of userTags) {
         for (const { channel, tags } of createdChannels) {
@@ -228,42 +86,24 @@ const SALT_ROUNDS = 10
 
           if (matchingTag) {
             recommendedChannels.push(channel)
-          } else {
-            otherChannels.push(channel)
           }
         }
       }
-
-      const recommendedChannelsCount = Math.round(
-        Math.random() * (userTags.length - 2) + 2
-      )
-      const otherChannelsCount = Math.round(
-        (Math.random() * recommendedChannelsCount) / 3
-      )
-
-      for (let index = 0; index <= recommendedChannelsCount; index++) {
-        const randomChannelIndex = Math.floor(
-          Math.random() * recommendedChannels.length
-        )
-
+      
+      // Add half of reco channels to user channels
+      for (let index = 0; index < (recommendedChannels.length / 2); index++) {
         await newUser.addChannel(
-          recommendedChannels[randomChannelIndex].dataValues.id
-        )
-      }
-
-      for (let index = 0; index <= otherChannelsCount; index++) {
-        const randomChannelIndex = Math.floor(
-          Math.random() * otherChannels.length
-        )
-
-        await newUser.addChannel(
-          otherChannels[randomChannelIndex].dataValues.id
+          recommendedChannels[index].dataValues.id
         )
       }
 
       await newUser.save()
     }
+    
+    // Inserts fakeMessages in DB
+    await Message.bulkCreate(messages);
 
+    // Creates test user
     const testUser = await User.create({
       email: 'testeur@testmail.com',
       password: await bcrypt.hash('7357', SALT_ROUNDS),
@@ -272,7 +112,8 @@ const SALT_ROUNDS = 10
 
     const testUserTags = []
 
-    for (let index = 1; index <= 9; index++) {
+    // Add random tags to test user
+    for (let index = 1; index <= 5; index++) {
       const randomIndex = Math.floor(Math.random() * createdTags.length)
 
       if (
@@ -284,8 +125,8 @@ const SALT_ROUNDS = 10
       }
     }
 
+    // Filter channels with matching tags
     const recommendedChannels = []
-    const otherChannels = []
 
     for (const userTag of testUserTags) {
       for (const { channel, tags } of createdChannels) {
@@ -295,31 +136,43 @@ const SALT_ROUNDS = 10
 
         if (matchingTag) {
           recommendedChannels.push(channel)
-        } else {
-          otherChannels.push(channel)
-        }
+        } 
       }
     }
 
-    for (let index = 0; index <= 5; index++) {
-      const randomChannelIndex = Math.floor(
-        Math.random() * recommendedChannels.length
-      )
-
+    // Add half of reco channels to user channels
+    for (let index = 0; index < (recommendedChannels.length / 2); index++) {
       await testUser.addChannel(
-        recommendedChannels[randomChannelIndex].dataValues.id
+        recommendedChannels[index].dataValues.id
       )
-    }
-
-    for (let index = 0; index <= 2; index++) {
-      const randomChannelIndex = Math.floor(
-        Math.random() * otherChannels.length
-      )
-
-      await testUser.addChannel(otherChannels[randomChannelIndex].dataValues.id)
     }
 
     await testUser.save()
+    
+    const bob = await User.create({
+      email: 'bob@bob.fr',
+      password: await bcrypt.hash('bob', SALT_ROUNDS),
+      nickname: 'bob',
+      avatar: avatarList[Math.floor(Math.random() * 6)],
+    })
+    await bob.save()
+    
+    // Test messages
+    // const channel = await Channel.findByPk(1, {
+    //   include: [{
+    //     association: 'users',
+    //     attributes: ['id', 'avatar', 'nickname', 'isLogged'],
+    //     through: {
+    //         attributes: []
+    //     }
+    //   }, 
+    //   {
+    //     association: 'channel_messages',
+    //   }]
+    // });
+    // console.log(channel);
+    // console.log(channel.channel_messages);
+    
   } catch (err) {
     console.error('>> Error while creating: ', err)
   } finally {
