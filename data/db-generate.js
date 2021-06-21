@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const faker = require('faker');
 
 const tags = require('./tags');
+const animsData = require('./anim-data.json');
 const channels = require('./channels');
 const messages = require('./fakeMessages');
 const avatar_1 = require('./avatar_1');
@@ -13,32 +14,29 @@ const avatar_5 = require('./avatar_5');
 const avatar_6 = require('./avatar_6');
 const avatarList = [avatar_1, avatar_2, avatar_3, avatar_4, avatar_5, avatar_6];
 
-faker.locale = 'fr'
-faker.seed(999)
+faker.locale = 'fr';
+faker.seed(999);
 
-const SALT_ROUNDS = 10
+const SALT_ROUNDS = 10;
 
 // Create a db first and set DATABASE_URL in your .env before running this file
 
-;(async () => {
+(async () => {
   try {
     await sequelize.sync({ force: true })
 
     const createdTags = await Tag.bulkCreate(tags);
-    const defaultChannels = createdTags.map((tag) => {
-      return { title: tag.name, tags: [{ name: tag.name }] }
-    })
 
     const createdChannels = []
 
     // This creates a channel in DB for each channel in channels and each tag.
-    for (const { title, tags } of [...channels, ...defaultChannels]) {
-      const channel = await Channel.create({ title })
+    for (const anim of animsData.response) {
+      const channel = await Channel.create({ title: anim.name })
       const channelTags = []
 
-      for (const tag of tags) {
+      for (const tag of anim.tags) {
         const matchingTag = createdTags.find(
-          (createdTag) => createdTag.dataValues.name === tag.name
+          (createdTag) => createdTag.dataValues.name === tag
         )
         if (matchingTag) {
           await channel.addTag(matchingTag.dataValues.id)
@@ -50,7 +48,7 @@ const SALT_ROUNDS = 10
     }
 
     // This creates 30 users
-    for (let index = 0; index < 30; index++) {
+    for (let index = 0; index < 100; index++) {
       const newUser = await User.create({
         email: faker.internet.email(),
         password: await bcrypt.hash(faker.internet.password(), SALT_ROUNDS),

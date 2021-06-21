@@ -1,5 +1,5 @@
-const { Sequelize } = require('sequelize');
 require('dotenv').config()
+const { Sequelize } = require('sequelize');
 
 const options = process.env.NODE_ENV === 'production' ? {
     dialectOptions: {

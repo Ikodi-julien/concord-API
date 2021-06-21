@@ -8,8 +8,8 @@ const PREFIX = "teacup:";
 // node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
 const JWT_SECRET = require('./JWT_SECRET');
 
-const jwtExpiration = 300;
-const jwtRefreshExpiration = 60 * 60 * 24 * 30;
+const jwtExpiration = 60 * 60; // 1hour
+const jwtRefreshExpiration = 60 * 60 * 24 * 7; // 1 week
 const refreshTokenMaxAge = new Date() + jwtRefreshExpiration;
 
 const auth = {
