@@ -4,7 +4,6 @@ const faker = require('faker');
 
 const tags = require('./tags');
 const animsData = require('./anim-data.json');
-const channels = require('./channels');
 const messages = require('./fakeMessages');
 const avatar_1 = require('./avatar_1');
 const avatar_2 = require('./avatar_2');
@@ -29,7 +28,7 @@ const SALT_ROUNDS = 10;
 
     const createdChannels = []
 
-    // This creates a channel in DB for each channel in channels and each tag.
+    // This creates a channel in DB for each anim in anim-data.response
     for (const anim of animsData.response) {
       const channel = await Channel.create({ title: anim.name })
       const channelTags = []
@@ -47,8 +46,8 @@ const SALT_ROUNDS = 10;
       createdChannels.push({ channel, tags: channelTags })
     }
 
-    // This creates 30 users
-    for (let index = 0; index < 100; index++) {
+    // This creates 50 users
+    for (let index = 0; index < 50; index++) {
       const newUser = await User.create({
         email: faker.internet.email(),
         password: await bcrypt.hash(faker.internet.password(), SALT_ROUNDS),
