@@ -24,7 +24,7 @@ const verifyJWT = async (req, res, next) => {
                 throw err;
             };
 
-
+            // if TokenExpiredError
             const decoded = jwt.verify(refreshToken, JWT_SECRET)
 
             const { refreshToken: redisToken } = await authService.getRefreshToken(decoded.id, accessToken);
