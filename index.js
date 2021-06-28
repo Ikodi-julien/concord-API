@@ -2,10 +2,11 @@ require('dotenv').config();
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
-
 const { Server } = require('socket.io');
 const { createServer } = require('http')
 const cors = require('cors')
+const apiRouter = require('./app/routes/router');
+const socketHandler = require('./app/services/socket.handler');
 
 const app = express();
 const corsOptions = {
@@ -33,12 +34,6 @@ const io = new Server(httpServer,
     }
 );
 
-const apiRouter = require('./app/routes/router');
-const socketHandler = require('./app/services/socket.handler');
-
-const PORT = process.env.PORT || 8000;
-
-
 app.use(express.json());
 app.use('/v1', apiRouter);
 
@@ -47,5 +42,7 @@ io.on('connection', socket => {
     socketHandler.message(socket, io);
     socketHandler.disconnecting(socket, io);
 })
+
+const PORT = process.env.PORT || 8000;
 
 httpServer.listen(PORT, () => console.log(`Serveur running on http://localhost:${PORT}`));
