@@ -159,7 +159,9 @@ const userController = {
     getUserChannels: async (req, res) => {
         try {
             const channels = await Channel.findAll({
-                attributes: ["id", "title", [Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
+                attributes: ["id", "title", "img_url",
+                    "rank", "plot", "year",
+                [Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
                 group: ["Channel.id", "tags.id"],
                 include: [
                     {
@@ -229,7 +231,9 @@ const userController = {
 
             const recommendedChannels = user.tags.length ?
                 await Channel.findAll({
-                    attributes: ["id", "title", [Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
+                    attributes: ["id", "title", "img_url",
+                        "rank", "plot", "year",
+                        [Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
                     include: [
                         {
                             association: "users",

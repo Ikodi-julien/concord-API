@@ -10,7 +10,7 @@ const privateRoutes = require('./private.route');
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 router.post('/logout', authController.logout);
-// router.post('/profile', authController.profile);
+router.get('/auth/google', authController.googleConnect)
 
 // Keep in public route ?
 router.get('/tags', tagController.getAllTags);
