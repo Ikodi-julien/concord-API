@@ -34,7 +34,6 @@ postgres# \! pg_dump -U postgres -W -d <dbname> > /var/www/html/concord/socket-c
 
 Restore backup
 ```bash
-postgres# \! psql -U postgres -W -d <dbname> -f > /var/www/html/concord/socket-chat-api/data/20210629_backup_<dbname>.sql;
-\! psql -U postgres -W -d concord -f /var/www/html/concord/socket-chat-api/data/20210629_backup_concord.sql;
+postgres# \! psql -U postgres -W -d concord -f /var/www/html/concord/socket-chat-api/data/20210629_backup_concord.sql;
 ```
 -f  read command from the given file
