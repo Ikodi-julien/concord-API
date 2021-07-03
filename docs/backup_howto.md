@@ -24,7 +24,7 @@ psql  PostgreSQL interactive terminal
 ## Backup the database
 
 ```bash
-postgres# \! pg_dump -U postgres -W -d <dbname> > /var/www/html/concord/socket-chat-api/data/20210629_backup_<dbname>.sql;
+postgres# \! pg_dump -U postgres -W -d <dbname> > /var/www/html/concord/socket-chat-api/data/<backup_name>.sql;
 ```
 -U  Specify username to connect to DB
 -W  Force prompt for password
@@ -34,6 +34,6 @@ postgres# \! pg_dump -U postgres -W -d <dbname> > /var/www/html/concord/socket-c
 
 Restore backup
 ```bash
-postgres# \! pg_dump -U postgres -W -d <dbname> -f > /var/www/html/concord/socket-chat-api/data/20210629_backup_<dbname>.sql;
+postgres=# \! psql -U postgres -W -d <dbname> -f /var/www/html/concord/socket-chat-api/data/<backup_name>.sql;
 ```
 -f  read command from the given file

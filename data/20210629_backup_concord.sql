@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: channel; Type: TABLE; Schema: public; Owner: teacup
+-- Name: channel; Type: TABLE; Schema: public; Owner: concord
 --
 
 CREATE TABLE public.channel (
@@ -32,10 +32,10 @@ CREATE TABLE public.channel (
 );
 
 
-ALTER TABLE public.channel OWNER TO teacup;
+ALTER TABLE public.channel OWNER TO concord;
 
 --
--- Name: channel_has_tag; Type: TABLE; Schema: public; Owner: teacup
+-- Name: channel_has_tag; Type: TABLE; Schema: public; Owner: concord
 --
 
 CREATE TABLE public.channel_has_tag (
@@ -46,10 +46,10 @@ CREATE TABLE public.channel_has_tag (
 );
 
 
-ALTER TABLE public.channel_has_tag OWNER TO teacup;
+ALTER TABLE public.channel_has_tag OWNER TO concord;
 
 --
--- Name: channel_id_seq; Type: SEQUENCE; Schema: public; Owner: teacup
+-- Name: channel_id_seq; Type: SEQUENCE; Schema: public; Owner: concord
 --
 
 CREATE SEQUENCE public.channel_id_seq
@@ -61,17 +61,17 @@ CREATE SEQUENCE public.channel_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.channel_id_seq OWNER TO teacup;
+ALTER TABLE public.channel_id_seq OWNER TO concord;
 
 --
--- Name: channel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: teacup
+-- Name: channel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: concord
 --
 
 ALTER SEQUENCE public.channel_id_seq OWNED BY public.channel.id;
 
 
 --
--- Name: message; Type: TABLE; Schema: public; Owner: teacup
+-- Name: message; Type: TABLE; Schema: public; Owner: concord
 --
 
 CREATE TABLE public.message (
@@ -84,10 +84,10 @@ CREATE TABLE public.message (
 );
 
 
-ALTER TABLE public.message OWNER TO teacup;
+ALTER TABLE public.message OWNER TO concord;
 
 --
--- Name: message_id_seq; Type: SEQUENCE; Schema: public; Owner: teacup
+-- Name: message_id_seq; Type: SEQUENCE; Schema: public; Owner: concord
 --
 
 CREATE SEQUENCE public.message_id_seq
@@ -99,17 +99,17 @@ CREATE SEQUENCE public.message_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.message_id_seq OWNER TO teacup;
+ALTER TABLE public.message_id_seq OWNER TO concord;
 
 --
--- Name: message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: teacup
+-- Name: message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: concord
 --
 
 ALTER SEQUENCE public.message_id_seq OWNED BY public.message.id;
 
 
 --
--- Name: tag; Type: TABLE; Schema: public; Owner: teacup
+-- Name: tag; Type: TABLE; Schema: public; Owner: concord
 --
 
 CREATE TABLE public.tag (
@@ -120,10 +120,10 @@ CREATE TABLE public.tag (
 );
 
 
-ALTER TABLE public.tag OWNER TO teacup;
+ALTER TABLE public.tag OWNER TO concord;
 
 --
--- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: teacup
+-- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: concord
 --
 
 CREATE SEQUENCE public.tag_id_seq
@@ -135,17 +135,17 @@ CREATE SEQUENCE public.tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tag_id_seq OWNER TO teacup;
+ALTER TABLE public.tag_id_seq OWNER TO concord;
 
 --
--- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: teacup
+-- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: concord
 --
 
 ALTER SEQUENCE public.tag_id_seq OWNED BY public.tag.id;
 
 
 --
--- Name: user; Type: TABLE; Schema: public; Owner: teacup
+-- Name: user; Type: TABLE; Schema: public; Owner: concord
 --
 
 CREATE TABLE public."user" (
@@ -159,10 +159,10 @@ CREATE TABLE public."user" (
 );
 
 
-ALTER TABLE public."user" OWNER TO teacup;
+ALTER TABLE public."user" OWNER TO concord;
 
 --
--- Name: user_has_channel; Type: TABLE; Schema: public; Owner: teacup
+-- Name: user_has_channel; Type: TABLE; Schema: public; Owner: concord
 --
 
 CREATE TABLE public.user_has_channel (
@@ -173,10 +173,10 @@ CREATE TABLE public.user_has_channel (
 );
 
 
-ALTER TABLE public.user_has_channel OWNER TO teacup;
+ALTER TABLE public.user_has_channel OWNER TO concord;
 
 --
--- Name: user_has_tag; Type: TABLE; Schema: public; Owner: teacup
+-- Name: user_has_tag; Type: TABLE; Schema: public; Owner: concord
 --
 
 CREATE TABLE public.user_has_tag (
@@ -187,10 +187,10 @@ CREATE TABLE public.user_has_tag (
 );
 
 
-ALTER TABLE public.user_has_tag OWNER TO teacup;
+ALTER TABLE public.user_has_tag OWNER TO concord;
 
 --
--- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: teacup
+-- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: concord
 --
 
 CREATE SEQUENCE public.user_id_seq
@@ -202,45 +202,45 @@ CREATE SEQUENCE public.user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_id_seq OWNER TO teacup;
+ALTER TABLE public.user_id_seq OWNER TO concord;
 
 --
--- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: teacup
+-- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: concord
 --
 
 ALTER SEQUENCE public.user_id_seq OWNED BY public."user".id;
 
 
 --
--- Name: channel id; Type: DEFAULT; Schema: public; Owner: teacup
+-- Name: channel id; Type: DEFAULT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.channel ALTER COLUMN id SET DEFAULT nextval('public.channel_id_seq'::regclass);
 
 
 --
--- Name: message id; Type: DEFAULT; Schema: public; Owner: teacup
+-- Name: message id; Type: DEFAULT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.message ALTER COLUMN id SET DEFAULT nextval('public.message_id_seq'::regclass);
 
 
 --
--- Name: tag id; Type: DEFAULT; Schema: public; Owner: teacup
+-- Name: tag id; Type: DEFAULT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.tag ALTER COLUMN id SET DEFAULT nextval('public.tag_id_seq'::regclass);
 
 
 --
--- Name: user id; Type: DEFAULT; Schema: public; Owner: teacup
+-- Name: user id; Type: DEFAULT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 
 
 --
--- Data for Name: channel; Type: TABLE DATA; Schema: public; Owner: teacup
+-- Data for Name: channel; Type: TABLE DATA; Schema: public; Owner: concord
 --
 
 COPY public.channel (id, title, created_at, updated_at) FROM stdin;
@@ -283,7 +283,7 @@ COPY public.channel (id, title, created_at, updated_at) FROM stdin;
 
 
 --
--- Data for Name: channel_has_tag; Type: TABLE DATA; Schema: public; Owner: teacup
+-- Data for Name: channel_has_tag; Type: TABLE DATA; Schema: public; Owner: concord
 --
 
 COPY public.channel_has_tag (created_at, updated_at, tag_id, channel_id) FROM stdin;
@@ -437,7 +437,7 @@ COPY public.channel_has_tag (created_at, updated_at, tag_id, channel_id) FROM st
 
 
 --
--- Data for Name: message; Type: TABLE DATA; Schema: public; Owner: teacup
+-- Data for Name: message; Type: TABLE DATA; Schema: public; Owner: concord
 --
 
 COPY public.message (id, content, created_at, updated_at, channel_id, user_id) FROM stdin;
@@ -682,7 +682,7 @@ COPY public.message (id, content, created_at, updated_at, channel_id, user_id) F
 
 
 --
--- Data for Name: tag; Type: TABLE DATA; Schema: public; Owner: teacup
+-- Data for Name: tag; Type: TABLE DATA; Schema: public; Owner: concord
 --
 
 COPY public.tag (id, name, created_at, updated_at) FROM stdin;
@@ -732,7 +732,7 @@ COPY public.tag (id, name, created_at, updated_at) FROM stdin;
 
 
 --
--- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: teacup
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: concord
 --
 
 COPY public."user" (id, avatar, nickname, email, password, created_at, updated_at) FROM stdin;
@@ -794,7 +794,7 @@ COPY public."user" (id, avatar, nickname, email, password, created_at, updated_a
 
 
 --
--- Data for Name: user_has_channel; Type: TABLE DATA; Schema: public; Owner: teacup
+-- Data for Name: user_has_channel; Type: TABLE DATA; Schema: public; Owner: concord
 --
 
 COPY public.user_has_channel (created_at, updated_at, channel_id, user_id) FROM stdin;
@@ -1118,7 +1118,7 @@ COPY public.user_has_channel (created_at, updated_at, channel_id, user_id) FROM 
 
 
 --
--- Data for Name: user_has_tag; Type: TABLE DATA; Schema: public; Owner: teacup
+-- Data for Name: user_has_tag; Type: TABLE DATA; Schema: public; Owner: concord
 --
 
 COPY public.user_has_tag (created_at, updated_at, user_id, tag_id) FROM stdin;
@@ -1298,35 +1298,35 @@ COPY public.user_has_tag (created_at, updated_at, user_id, tag_id) FROM stdin;
 
 
 --
--- Name: channel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: teacup
+-- Name: channel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: concord
 --
 
 SELECT pg_catalog.setval('public.channel_id_seq', 35, true);
 
 
 --
--- Name: message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: teacup
+-- Name: message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: concord
 --
 
 SELECT pg_catalog.setval('public.message_id_seq', 237, true);
 
 
 --
--- Name: tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: teacup
+-- Name: tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: concord
 --
 
 SELECT pg_catalog.setval('public.tag_id_seq', 42, true);
 
 
 --
--- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: teacup
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: concord
 --
 
 SELECT pg_catalog.setval('public.user_id_seq', 80, true);
 
 
 --
--- Name: channel_has_tag channel_has_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: channel_has_tag channel_has_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.channel_has_tag
@@ -1334,7 +1334,7 @@ ALTER TABLE ONLY public.channel_has_tag
 
 
 --
--- Name: channel channel_pkey; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: channel channel_pkey; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.channel
@@ -1342,7 +1342,7 @@ ALTER TABLE ONLY public.channel
 
 
 --
--- Name: channel channel_title_key; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: channel channel_title_key; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.channel
@@ -1350,7 +1350,7 @@ ALTER TABLE ONLY public.channel
 
 
 --
--- Name: message message_pkey; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: message message_pkey; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.message
@@ -1358,7 +1358,7 @@ ALTER TABLE ONLY public.message
 
 
 --
--- Name: tag tag_name_key; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: tag tag_name_key; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.tag
@@ -1366,7 +1366,7 @@ ALTER TABLE ONLY public.tag
 
 
 --
--- Name: tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.tag
@@ -1374,7 +1374,7 @@ ALTER TABLE ONLY public.tag
 
 
 --
--- Name: user user_email_key; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user user_email_key; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public."user"
@@ -1382,7 +1382,7 @@ ALTER TABLE ONLY public."user"
 
 
 --
--- Name: user_has_channel user_has_channel_pkey; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user_has_channel user_has_channel_pkey; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.user_has_channel
@@ -1390,7 +1390,7 @@ ALTER TABLE ONLY public.user_has_channel
 
 
 --
--- Name: user_has_tag user_has_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user_has_tag user_has_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.user_has_tag
@@ -1398,7 +1398,7 @@ ALTER TABLE ONLY public.user_has_tag
 
 
 --
--- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public."user"
@@ -1406,7 +1406,7 @@ ALTER TABLE ONLY public."user"
 
 
 --
--- Name: channel_has_tag channel_has_tag_channel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: channel_has_tag channel_has_tag_channel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.channel_has_tag
@@ -1414,7 +1414,7 @@ ALTER TABLE ONLY public.channel_has_tag
 
 
 --
--- Name: channel_has_tag channel_has_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: channel_has_tag channel_has_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.channel_has_tag
@@ -1422,7 +1422,7 @@ ALTER TABLE ONLY public.channel_has_tag
 
 
 --
--- Name: message message_channel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: message message_channel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.message
@@ -1430,7 +1430,7 @@ ALTER TABLE ONLY public.message
 
 
 --
--- Name: message message_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: message message_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.message
@@ -1438,7 +1438,7 @@ ALTER TABLE ONLY public.message
 
 
 --
--- Name: user_has_channel user_has_channel_channel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user_has_channel user_has_channel_channel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.user_has_channel
@@ -1446,7 +1446,7 @@ ALTER TABLE ONLY public.user_has_channel
 
 
 --
--- Name: user_has_channel user_has_channel_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user_has_channel user_has_channel_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.user_has_channel
@@ -1454,7 +1454,7 @@ ALTER TABLE ONLY public.user_has_channel
 
 
 --
--- Name: user_has_tag user_has_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user_has_tag user_has_tag_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.user_has_tag
@@ -1462,7 +1462,7 @@ ALTER TABLE ONLY public.user_has_tag
 
 
 --
--- Name: user_has_tag user_has_tag_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: teacup
+-- Name: user_has_tag user_has_tag_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: concord
 --
 
 ALTER TABLE ONLY public.user_has_tag

@@ -12,7 +12,7 @@ const app = express();
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' ?
         [/\.ikodi\.eu\/?$/] :
-        'http://localhost:8080',
+        ['http://localhost:8080', 'http://localhost:8000'],
     credentials: true
 }
 app.use(cors(corsOptions));
@@ -43,6 +43,6 @@ io.on('connection', socket => {
     socketHandler.disconnecting(socket, io);
 })
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 httpServer.listen(PORT, () => console.log(`Serveur running on http://localhost:${PORT}`));
