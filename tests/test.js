@@ -33,7 +33,7 @@ describe("GET /channels - without credentials - fail", () => {
 });
 
 /**
- * Test create user
+ * Test signup
  */
  describe('POST /signup with empty input', () => {
   it('should respond with an error 412 "Precondition Failed"', (done) => {
@@ -85,7 +85,7 @@ describe('POST /signup with correct input', () => {
 });
   
 /**
- * Test with credentials
+ * Test login 
  */
 describe('POST /login with empty email  - fail', () => {
   it('should respond with an error 412 "Precondition Failed', (done) => {
@@ -117,7 +117,7 @@ describe('POST /login with invalid credentials  - fail', () => {
     
     
 
-describe('POST /login with credentials - success', () => {
+describe('POST /login - success', () => {
   it('should respond with status 200 and set cookie access_token and refresh_token', (done) => {
     request
       .post('/v1/login')
@@ -145,7 +145,7 @@ describe('POST /login with credentials - success', () => {
 /**
  * Test GET user
  */
-describe('Tests with access-token', () => {
+describe('Tests access-token', () => {
 
   describe('GET /me with invalid access-token - fail', () => {
     it('should return status 401 unauthorized', (done) => {
