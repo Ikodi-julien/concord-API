@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const googleTools = require('../services/google.tools');
 
 const { User, Channel } = require("../models");
 const authService = require('../services/auth.service');
