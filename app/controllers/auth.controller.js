@@ -94,11 +94,7 @@ const authController = {
                 false;
 
             if (!isPasswordValid) {
-                if (google) {
-                  // TODO créer un user avec les données
-                  console.log('google');
-                  return res.cookie('test', 'jwt').redirect('https://concord.ikodi.eu');
-                }
+
                 return res.status(409).json({
                     messsage: `Your credentials are invalid.`
                 });
@@ -157,34 +153,6 @@ const authController = {
             res.status(400).json({ message });
         }
     },
-    
-    googleConnect: async (request, response) => {
-        try {
-          const dataGoogle = await googleTools.getGoogleAccountFromCode(
-            request.query.code
-          );
-    
-          if (dataGoogle) {
-            request.body.email = dataGoogle.email;
-            request.body.password = dataGoogle.password;
-            request.body.google = true;
-            
-            const resLogin = await authController.login(request, response);
-            
-            // En cas de status 409, c'est un premier login, il faut créer un compte
-            // if (!resLogin) {
-            //   response.redirect('localhost:8080');
-            // }
-            // response.redirect('https://concord.ikodi.eu')
-            
-            return;
-          } else {
-            response.redirect('localhost:8080');
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
 };
 
 module.exports = authController;
