@@ -35,7 +35,7 @@ const io = new Server(httpServer,
 );
 
 app.use(express.json());
-app.use('/v1', apiRouter);
+app.use('/v2', apiRouter);
 
 io.on('connection', socket => {
     socketHandler.auth(socket, io);
