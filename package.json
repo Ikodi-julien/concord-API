@@ -13,6 +13,7 @@
   "author": "VainKate & guillaume67450",
   "license": "ISC",
   "dependencies": {
+    "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
