@@ -1,5 +1,4 @@
 node_modules
-.env
 dump.rdb
 google_key_local.json
-google_key_app-concord-gandi.json
+tests

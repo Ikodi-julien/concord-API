@@ -1,5 +1,5 @@
 const { google } = require('googleapis');
-const OAuth2Data = require('./google_key_local') 
+const OAuth2Data = require('./google_key_app-concord-gandi.json');
 
 /**
  * Create a OAuthClient 2.0 that handles flow with API
