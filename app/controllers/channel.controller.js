@@ -39,6 +39,10 @@ const channelController = {
             return res.json({
                 id: channel.id,
                 title: channel.title,
+                img_url: channel.img_url,
+                rank: channel.rank,
+                plot: channel.plot,
+                year: channel.year,
                 messages: formatedMessages,
                 users: channel.users,
             });
@@ -53,7 +57,7 @@ const channelController = {
     getAllChannels: async (_, res) => {
         try {
             const channels = await Channel.findAll({
-                attributes: ["id", "title", [Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
+                attributes: ["id", "title", "plot", "rank", "year", "img_url",[Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
                 group: ["Channel.id", "tags.id"],
                 include: [
                     {

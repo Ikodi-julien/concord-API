@@ -1,5 +1,6 @@
 const { Channel, Message } = require('../models');
 const usersStatus = require('./usersStatus.service');
+const sanitizeHtml = require('sanitize-html');
 
 const socketHandler = {
     auth: (socket, io) => {
@@ -70,7 +71,15 @@ const socketHandler = {
             }
             */
             message.id = `${message.user.id}-${Date.now()}`
-
+            
+            // message must be a delta object in json with ops and insert prop
+            if (!message.content.ops) message.content = "ce n'est pas un message conforme";
+            
+            // sanitizing delta object for each insert prop
+            message.content.ops.forEach(item => {
+                item = sanitizeHtml(item);
+            });
+            
             io.to(`channel-${message.channel.id}`).emit('message', message);
             
             // Insert each message received in Message table

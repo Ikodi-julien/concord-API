@@ -2,16 +2,17 @@ require('dotenv').config();
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
-
 const { Server } = require('socket.io');
 const { createServer } = require('http')
 const cors = require('cors')
+const apiRouter = require('./app/routes/router');
+const socketHandler = require('./app/services/socket.handler');
 
 const app = express();
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' ?
-        [/\.quillers\.fr\/?$/, /\.ikodi\.eu\/?$/] :
-        'http://localhost:8080',
+        [/\.ikodi\.eu\/?$/] :
+        ['http://localhost:8080', 'http://localhost:8000'],
     credentials: true
 }
 app.use(cors(corsOptions));
@@ -33,19 +34,15 @@ const io = new Server(httpServer,
     }
 );
 
-const apiRouter = require('./app/routes/router');
-const socketHandler = require('./app/services/socket.handler');
-
-const PORT = process.env.PORT || 8000;
-
-
 app.use(express.json());
-app.use('/v1', apiRouter);
+app.use('/v2', apiRouter);
 
 io.on('connection', socket => {
     socketHandler.auth(socket, io);
     socketHandler.message(socket, io);
     socketHandler.disconnecting(socket, io);
 })
+
+const PORT = process.env.PORT || 5000;
 
 httpServer.listen(PORT, () => console.log(`Serveur running on http://localhost:${PORT}`));

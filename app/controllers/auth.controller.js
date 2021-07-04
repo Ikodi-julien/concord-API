@@ -57,7 +57,7 @@ const authController = {
 
     login: async (req, res) => {
         try {
-            const { email, password } = req.body;
+            const { email, password, google } = req.body;
 
             if (!email || !password) {
                 return res
@@ -93,6 +93,7 @@ const authController = {
                 false;
 
             if (!isPasswordValid) {
+
                 return res.status(409).json({
                     messsage: `Your credentials are invalid.`
                 });
@@ -150,7 +151,7 @@ const authController = {
             const message = error.parent?.detail || error.message
             res.status(400).json({ message });
         }
-    }
+    },
 };
 
 module.exports = authController;
