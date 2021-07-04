@@ -1,6 +1,6 @@
 const asyncClient = require('../redisClient');
 
-const PREFIX = 'teacup:'
+const PREFIX = 'concord:'
 
 const usersStatus = {
     addToOnlineList: async (channelKey, userId) => {
