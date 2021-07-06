@@ -9,7 +9,7 @@ let accessToken, refreshToken;
  */
 describe("GET /tags - without credentials - success", () => {
   it('responds with json list length greater than 10', (done) => {
-    request.get('/v1/tags')
+    request.get('/v2/tags')
     .set('Content-Type', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200, (err, res) => {
@@ -25,7 +25,7 @@ describe("GET /tags - without credentials - success", () => {
  */
 describe("GET /channels - without credentials - fail", () => {
   it('should respond with an error 401 - unauthorized', (done) => {
-    request.get('/v1/channels')
+    request.get('/v2/channels')
     .set('Content-Type', 'application/json')
     .expect('Content-Type', /json/)
     .expect(401, done);
@@ -38,7 +38,7 @@ describe("GET /channels - without credentials - fail", () => {
  describe('POST /signup with empty input', () => {
   it('should respond with an error 412 "Precondition Failed"', (done) => {
     request
-      .post('/v1/signup')
+      .post('/v2/signup')
       .send({
         "email" : "",
         "password" : "test",
@@ -53,7 +53,7 @@ describe("GET /channels - without credentials - fail", () => {
 describe('POST /signup with invalid email', () => {
   it('should respond with an error 500 "Internal Server Error"', (done) => {
     request
-      .post('/v1/signup')
+      .post('/v2/signup')
       .send({
         "email" : "test",
         "password" : "test",
@@ -68,7 +68,7 @@ describe('POST /signup with invalid email', () => {
 describe('POST /signup with correct input', () => {
   it('should respond with status 200 and json with property "id"', (done) => {
     request
-      .post('/v1/signup')
+      .post('/v2/signup')
       .send({
         "email" : "test@test.fr",
         "password" : "test",
@@ -90,7 +90,7 @@ describe('POST /signup with correct input', () => {
 describe('POST /login with empty email  - fail', () => {
   it('should respond with an error 412 "Precondition Failed', (done) => {
     request
-      .post('/v1/login')
+      .post('/v2/login')
       .send({
         "email" : "",
         "password" : "test",
@@ -104,7 +104,7 @@ describe('POST /login with empty email  - fail', () => {
 describe('POST /login with invalid credentials  - fail', () => {
   it('should respond with an error 409', (done) => {
     request
-      .post('/v1/login')
+      .post('/v2/login')
       .send({
         "email" : "testeur@testeur.fr",
         "password" : "testeur",
@@ -120,7 +120,7 @@ describe('POST /login with invalid credentials  - fail', () => {
 describe('POST /login - success', () => {
   it('should respond with status 200 and set cookie access_token and refresh_token', (done) => {
     request
-      .post('/v1/login')
+      .post('/v2/login')
       .send({
         "email" : "test@test.fr",
         "password" : "test",
@@ -150,7 +150,7 @@ describe('Tests access-token', () => {
   describe('GET /me with invalid access-token - fail', () => {
     it('should return status 401 unauthorized', (done) => {
       request
-      .get('/v1/me')
+      .get('/v2/me')
       .set('Cookie', [ 'access-token=notgood', refreshToken ])
       .set('Accept', 'application/json')
       .send()
@@ -162,7 +162,7 @@ describe('Tests access-token', () => {
   describe('GET /me with access-token - success', () => {
     it('should return user data with expected properties', (done) => {
       request
-        .get(`/v1/me`)
+        .get(`/v2/me`)
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -182,7 +182,7 @@ describe('Tests access-token', () => {
   describe('GET /me/channels with access-token - success', () => {
     it('should return status 200 and an empty list', (done) => {
       request
-        .get(`/v1/me/channels`)
+        .get(`/v2/me/channels`)
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -198,7 +198,7 @@ describe('Tests access-token', () => {
   describe('GET /channel/2 with invalid access-token - fail', () => {
     it('should return status 401 unauthorized', (done) => {
       request
-      .get('/v1/channel/2')
+      .get('/v2/channel/2')
       .set('Cookie', [ 'access-token=notgood', refreshToken ])
       .set('Accept', 'application/json')
       .send()
@@ -210,7 +210,7 @@ describe('Tests access-token', () => {
   describe('GET /channel/2 with access-token - success', () => {
     it('should return status 200 and channel n°32 datas', (done) => {
       request
-      .get('/v1/channel/2')
+      .get('/v2/channel/2')
       .set('Cookie', [ accessToken, refreshToken ])
       .set('Accept', 'application/json')
       .send()
@@ -232,7 +232,7 @@ describe('Tests access-token', () => {
   describe('PUT /me - success', () => {
   it('should add 3 tags to user and return user data ', (done) => {
     request
-      .put(`/v1/me`)
+      .put(`/v2/me`)
       .set('Cookie', [ accessToken, refreshToken ])
       .set('Accept', 'application/json')
       .send({
@@ -255,7 +255,7 @@ describe('Tests access-token', () => {
   describe('PUT /me/avatar - success', () => {
     it('should add an avatar to user and return user data with avatar property ', (done) => {
       request
-        .put(`/v1/me/avatar`)
+        .put(`/v2/me/avatar`)
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send({
@@ -273,7 +273,7 @@ describe('Tests access-token', () => {
   describe('GET /me/recommended with access-token - success', () => {
     it('should return status 200 and a list with several objects', (done) => {
       request
-        .get(`/v1/me/recommended`)
+        .get(`/v2/me/recommended`)
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -290,7 +290,7 @@ describe('Tests access-token', () => {
   describe('GET /tags/channels with access-token - success', () => {
     it('should return status 200 and a list with several objects', (done) => {
       request
-        .get(`/v1/tags/channels`)
+        .get(`/v2/tags/channels`)
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -309,7 +309,7 @@ describe('Tests access-token', () => {
   describe('POST /logout with access-token - success', () => {
     it('should logout the user', (done) => {
       request
-        .post('/v1/logout')
+        .post('/v2/logout')
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -324,7 +324,7 @@ describe('Tests access-token', () => {
   describe('DELETE /me with access-token - success', () => {
     it('should delete user account', (done) => {
       request
-        .delete('/v1/me')
+        .delete('/v2/me')
         .set('Cookie', [ accessToken, refreshToken ])
         .set('Accept', 'application/json')
         .send()
@@ -340,7 +340,7 @@ describe('Tests access-token', () => {
 describe('POST /login - fail after user deleted', () => {
   it('should send status 409', (done) => {
     request
-      .post('/v1/login')
+      .post('/v2/login')
       .send({
         "email" : "test@test.fr",
         "password" : "test",

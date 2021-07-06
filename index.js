@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const { Server } = require('socket.io');
 const { createServer } = require('http')
 const cors = require('cors')
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json');
 const apiRouter = require('./app/routes/router');
 const socketHandler = require('./app/services/socket.handler');
 
@@ -17,6 +19,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer,

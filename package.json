@@ -7,7 +7,7 @@
   {
     "test": "mocha ./tests/test.js",
     "generate-db": "node ./data/db-generate.js",
-    "start": "node ./data/db-generate.js && node index.js",
+    "start": "node index.js",
     "start-new-db": "node ./data/db-generate.js && node index.js",
     "dev": "node index.js"
   },
@@ -32,6 +32,8 @@
     "sanitize-html": "^2.4.0",
     "sequelize": "^6.6.2",
     "socket.io": "^4.0.1",
-    "supertest": "^6.1.3"
+    "supertest": "^6.1.3",
+    "swagger-autogen": "^2.10.2",
+    "swagger-ui-express": "^4.1.6"
   }
 }
