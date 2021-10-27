@@ -29,8 +29,8 @@ const SALT_ROUNDS = 10;
     const createdChannels = []
 
     // This creates a channel in DB for each anim in anim-data.response
-    for (const anim of animsData.response) {
-      const channel = await Channel.create(
+    for (const anim of animsData) {
+      if (animsData.name) {const channel = await Channel.create(
         {
           title: anim.name,
           img_url: anim.img,
@@ -50,7 +50,7 @@ const SALT_ROUNDS = 10;
         }
       }
       await channel.save()
-      createdChannels.push({ channel, tags: channelTags })
+      createdChannels.push({ channel, tags: channelTags })}
     }
 
     // This creates 50 users
