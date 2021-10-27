@@ -18,7 +18,7 @@ const auth = {
             httpOnly: true,
             sameSite: 'None',
             secure: true,
-            domain : 'chat-api-ikodi.herokuapp.com'
+            domain : 'concordapi.ikodi.eu'
         } :
         {
             httpOnly: true,
