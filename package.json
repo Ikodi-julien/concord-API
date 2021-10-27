@@ -8,7 +8,8 @@
     "test": "mocha ./tests/test.js",
     "generate-db": "node ./data/db-generate.js",
     "start-prod": "NODE_ENV=production node index.js",
-    "start-new-db-prod": "node ./data/db-generate.js && NODE_ENV=production node index.js"
+    "start-new-db-prod": "node ./data/db-generate.js && NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=develop node index.js"
   },
   "author": "VainKate & guillaume67450",
   "license": "ISC",

@@ -107,7 +107,7 @@ const SALT_ROUNDS = 10;
     // Inserts fakeMessages in DB
     await Message.bulkCreate(messages);
 
-    // Creates test user
+    /*--- Creates test user ---*/
     const testUser = await User.create({
       email: 'testeur@testmail.com',
       password: await bcrypt.hash('7357', SALT_ROUNDS),

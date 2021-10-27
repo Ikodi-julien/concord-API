@@ -12,7 +12,7 @@ const app = express();
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' ?
         [/\.ikodi\.eu\/?$/] :
-        ['http://localhost:8002'],
+        ['http://localhost:8080'],
     credentials: true
 }
 app.use(cors(corsOptions));
