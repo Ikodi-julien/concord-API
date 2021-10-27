@@ -30,7 +30,8 @@ const SALT_ROUNDS = 10;
 
     // This creates a channel in DB for each anim in anim-data.response
     for (const anim of animsData) {
-      if (animsData.name) {const channel = await Channel.create(
+      if (anim.name) {
+        const channel = await Channel.create(
         {
           title: anim.name,
           img_url: anim.img,

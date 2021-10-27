@@ -2,7 +2,7 @@ var faker = require('faker');
 
 const messages = [];
 
-for (let index = 0; index < 200; index++) {
+for (let index = 0; index < 100; index++) {
   messages.push({
     content: {
       ops: [{
