@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "description": "teacup backend",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha ./tests/test.js",
+  "scripts":
+  {
+    "test:integration": "mocha ./tests/integration.spec.js",
     "generate-db": "node ./data/db-generate.js",
     "start": "node index.js",
     "start-new-db": "node ./data/db-generate.js && node index.js",
@@ -12,7 +13,8 @@
   },
   "author": "VainKate & guillaume67450",
   "license": "ISC",
-  "dependencies": {
+  "dependencies":
+  {
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "chai": "^4.3.4",
