@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 const { authController, tagController } = require("../controllers");
-const verifyJWT = require('../middlewares/auth.middleware');
+const jwtMW = require('../middlewares/jwt.mw');
 const privateRoutes = require('./private.route');
 
 
@@ -14,6 +14,6 @@ router.post('/logout', authController.logout);
 // Keep in public route ?
 router.get('/tags', tagController.getAllTags);
 
-router.use(verifyJWT, privateRoutes);
+router.use(jwtMW.verify, privateRoutes);
 
 module.exports = router;

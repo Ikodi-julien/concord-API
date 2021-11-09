@@ -16,6 +16,7 @@
     "base-64": "^1.0.0",
     "bcrypt": "^5.0.1",
     "chai": "^4.3.4",
+    "chai-asserttype": "^1.0.5",
     "chai-http": "^4.3.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

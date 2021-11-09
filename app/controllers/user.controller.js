@@ -1,6 +1,6 @@
 const { User, Tag, Channel } = require("../models");
 const { Op, Sequelize } = require('sequelize');
-const authService = require("../services/auth.service");
+const cookieService = require('../services/cookie.service');
 
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
@@ -100,10 +100,10 @@ const userController = {
             user.password = hashedPassword;
             await user.save();
 
-            await authService.deleteAllRefreshToken(id);
+            await jwtService.deleteAllRefreshToken(id);
 
-            res.clearCookie("access_token", authService.cookieOptions);
-            res.clearCookie("refresh_token", authService.cookieOptions);
+            res.clearCookie("access_token", cookieService.options);
+            res.clearCookie("refresh_token", cookieService.options);
 
             return res.status(200).json({ message: 'Password updated' });
         } catch (error) {

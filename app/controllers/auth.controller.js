@@ -3,10 +3,11 @@ const jwt = require('jsonwebtoken');
 // const googleTools = require('../services/google.tools');
 
 const { User, Channel } = require("../models");
-const authService = require('../services/auth.service');
+const {jwtService} = require('../services/jwt.service');
+const cookieService = require('../services/cookie.service');
 
 const SALT_ROUNDS = 10;
-const JWT_SECRET = require('../services/JWT_SECRET');
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const authController = {
     /**
@@ -114,11 +115,11 @@ const authController = {
 
             user.recommendedChannels = recommendedChannels;
 
-            const { accessToken, refreshToken } = await authService.generateTokens({ id: user.id });
+            const { accessToken, refreshToken } = jwtService.getTokens({ id: user.id });
 
-            res.cookie("access_token", accessToken, authService.cookieOptions);
+            res.cookie("access_token", accessToken, cookieService.options);
 
-            res.cookie("refresh_token", refreshToken, authService.cookieOptions);
+            res.cookie("refresh_token", refreshToken, cookieService.options);
 
             res.status(200).json(user)
 
@@ -141,10 +142,10 @@ const authController = {
                 ignoreExpiration: true
             })
 
-            await authService.deleteRefreshToken(decoded.id, req.cookies.access_token);
+            // await jwtService.deleteRefreshToken(decoded.id, req.cookies.access_token);
 
-            res.clearCookie("access_token", authService.cookieOptions);
-            res.clearCookie("refresh_token", authService.cookieOptions);
+            res.clearCookie("access_token", cookieService.options);
+            res.clearCookie("refresh_token", cookieService.options);
 
             res.status(200).json({ message: 'Logout succeed' });
 
