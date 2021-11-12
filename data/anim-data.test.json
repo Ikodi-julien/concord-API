@@ -1,0 +1,31 @@
+[
+  {
+    "date": "27/10/2021"
+},
+  {
+    "name": "Fruits Basket the Final Season",
+    "rank": "1",
+    "type": "TV",
+    "img": "https://www.anime-planet.com/images/anime/covers/thumbs/15791.jpg?t=1628016647",
+    "altName": "Fruits Basket the Final",
+    "episode": 13,
+    "rating": 4.6,
+    "plot": "The final arc of Fruits Basket.",
+    "year": 2021,
+    "tags": ["Drama", "Fantasy", "Romance", "Shoujo", "Animal Transformation", "Contemporary Fantasy", "Curse",
+    "Dysfunctional Families", "Mental Illness", "Orphans", "Emotional Abuse", "Mature Themes", "Physical Abuse",
+    "Suicide", "Violence", "Based on a Manga", "Domestic Abuse"]
+},
+  {
+    "name": "Fullmetal Alchemist: Brotherhood",
+    "rank": "2",
+    "type": "TV",
+    "img": "https://www.anime-planet.com/images/anime/covers/thumbs/2360.jpg?t=1475346984",
+    "altName": "Hagane no Renkinjutsushi",
+    "episode": 64,
+    "rating": 4.6,
+    "plot": "The foundation of alchemy is based on the law of equivalent exchange; you cannot produce something from nothing. As such, alchemy is bound by one taboo - human transmutation. Four years ago two young brothers, Edward and Alphonse Elric, broke this taboo when they tried to resurrect their dead mother. During the process Al's body disintegrated and Ed lost his leg. In a desperate attempt to prevent his brother from disappearing completely, Ed sacrificed one of his arms so he could affix Al's soul to a suit of armor. When his missing limbs are replaced by auto mail parts, Ed bears the name of the Fullmetal Alchemist - the youngest ever State Alchemist and dog of the military. Now, alongside his brother, Ed uses his status within the military to attempt to find any way that he can return their bodies back to their original state.",
+    "year": 2009,
+    "tags": ["Action", "Adventure", "Drama", "Fantasy", "Mystery", "Shounen", "Conspiracy", "Death of a Loved One",
+    "Military", "Siblings", "Animal Abuse", "Mature Themes", "Violence", "Based on a Manga", "Domestic Abuse"]
+}]

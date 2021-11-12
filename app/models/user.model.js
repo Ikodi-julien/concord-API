@@ -3,30 +3,20 @@ module.exports = (sequelize, DataTypes, Model) => {
     class User extends Model { };
 
     User.init({
-        avatar: {
-            type: DataTypes.TEXT,
-            allowNull: true,
+        authid: {
+            type: DataTypes.INTEGER,
+            unique: true,
+            allowNull: false
         },
         nickname: {
             type: DataTypes.TEXT,
-            allowNull: false
-        },
-
-        email: {
-            type: DataTypes.TEXT,
-            unique: true,
+            unique: false,
             allowNull: false,
-            validate: {
-                isEmail: {
-                    args: true,
-                    msg: `The mail address is invalid or already in use`
-                }
-            }
         },
-
-        password: {
+        avatar: {
             type: DataTypes.TEXT,
-            allowNull: false
+            unique: false,
+            allowNull: true,
         },
 
         recommendedChannels: DataTypes.VIRTUAL,
@@ -36,24 +26,24 @@ module.exports = (sequelize, DataTypes, Model) => {
         sequelize,
         modelName: 'User',
         tableName: 'user',
-        defaultScope: {
-            attributes: {
-                exclude: ['password']
-            }
-        },
-        scopes: {
-            withPassword: {
-                attributes: {
-                    include: ['password']
-                }
-            }
-        }
+        // defaultScope: {
+        //     attributes: {
+        //         exclude: ['password']
+        //     }
+        // },
+        // scopes: {
+        //     withPassword: {
+        //         attributes: {
+        //             include: ['password']
+        //         }
+        //     }
+        // }
     });
 
     User.prototype.toJSON = function () {
         let values = Object.assign({}, this.get());
 
-        delete values.password;
+        // delete values.password;
         return values;
     }
 
