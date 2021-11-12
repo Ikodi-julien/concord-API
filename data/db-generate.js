@@ -30,38 +30,41 @@ const SALT_ROUNDS = 10;
 
     // This creates a channel in DB for each anim in anim-data.response
     for (const anim of animsData) {
-      if (animsData.name) {const channel = await Channel.create(
-        {
-          title: anim.name,
-          img_url: anim.img,
-          rank: anim.rank,
-          plot: anim.plot,
-          year: anim.year,
-        })
-      const channelTags = []
+      if (anim.name) {
+        
+        const channel = await Channel.create(
+          {
+            title: anim.name,
+            img_url: anim.img,
+            rank: anim.rank,
+            plot: anim.plot,
+            year: anim.year,
+          })
+        const channelTags = []
 
-      for (const tag of anim.tags) {
-        const matchingTag = createdTags.find(
-          (createdTag) => createdTag.dataValues.name === tag
-        )
-        if (matchingTag) {
-          await channel.addTag(matchingTag.dataValues.id)
-          channelTags.push(matchingTag)
+        for (const tag of anim.tags) {
+          const matchingTag = createdTags.find(
+            (createdTag) => createdTag.dataValues.name === tag
+          )
+          if (matchingTag) {
+            await channel.addTag(matchingTag.dataValues.id)
+            channelTags.push(matchingTag)
+          }
         }
+        createdChannels.push({ channel, tags: channelTags })
+        await channel.save()
       }
-      await channel.save()
-      createdChannels.push({ channel, tags: channelTags })}
     }
 
-    // This creates 50 users
-    for (let index = 0; index < 50; index++) {
+    // This creates 27 users
+    for (let index = 1; index < 28; index++) {
       const newUser = await User.create({
-        email: faker.internet.email(),
-        password: await bcrypt.hash(faker.internet.password(), SALT_ROUNDS),
+        authid: index,
         nickname: faker.internet.userName(),
         avatar: avatarList[Math.floor(Math.random() * 6)],
       })
-
+      // console.log(newUser);
+      
       // Add  random tags to user
       const tagCount = Math.round(Math.random() * 5 + 1)
       const userTags = []
@@ -100,83 +103,11 @@ const SALT_ROUNDS = 10;
           recommendedChannels[index].dataValues.id
         )
       }
-
       await newUser.save()
     }
     
-    // Inserts fakeMessages in DB
     await Message.bulkCreate(messages);
-
-    // Creates test user
-    const testUser = await User.create({
-      email: 'testeur@testmail.com',
-      password: await bcrypt.hash('7357', SALT_ROUNDS),
-      nickname: 'le serial testeur',
-    })
-
-    const testUserTags = []
-
-    // Add random tags to test user
-    for (let index = 1; index <= 5; index++) {
-      const randomIndex = Math.floor(Math.random() * createdTags.length)
-
-      if (
-        createdTags[randomIndex] &&
-        !testUserTags.includes(createdTags[randomIndex])
-      ) {
-        await testUser.addTag(createdTags[randomIndex])
-        testUserTags.push(createdTags[randomIndex])
-      }
-    }
-
-    // Filter channels with matching tags
-    const recommendedChannels = []
-
-    for (const userTag of testUserTags) {
-      for (const { channel, tags } of createdChannels) {
-        const matchingTag = tags.find(
-          (channelTag) => channelTag.dataValues.name === userTag.dataValues.name
-        )
-
-        if (matchingTag) {
-          recommendedChannels.push(channel)
-        } 
-      }
-    }
-
-    // Add half of reco channels to user channels
-    for (let index = 0; index < (recommendedChannels.length / 2); index++) {
-      await testUser.addChannel(
-        recommendedChannels[index].dataValues.id
-      )
-    }
-
-    await testUser.save()
-    
-    const bob = await User.create({
-      email: 'bob@bob.fr',
-      password: await bcrypt.hash('bob', SALT_ROUNDS),
-      nickname: 'bob',
-      avatar: avatarList[Math.floor(Math.random() * 6)],
-    })
-    await bob.save()
-    
-    // Test messages
-    // const channel = await Channel.findByPk(1, {
-    //   include: [{
-    //     association: 'users',
-    //     attributes: ['id', 'avatar', 'nickname', 'isLogged'],
-    //     through: {
-    //         attributes: []
-    //     }
-    //   }, 
-    //   {
-    //     association: 'channel_messages',
-    //   }]
-    // });
-    // console.log(channel);
-    // console.log(channel.channel_messages);
-    
+        
   } catch (err) {
     console.error('>> Error while creating: ', err)
   } finally {

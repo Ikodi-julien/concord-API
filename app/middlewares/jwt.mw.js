@@ -40,7 +40,7 @@ module.exports = {
           res.status(401).json(error.name !== 'Error' ?
           error :
           {
-              "message": error.message
+              "message": "Vous avez été déconnecté automatiquement après une longue période d'inactivité"
           })
         }
       }

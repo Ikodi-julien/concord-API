@@ -15,7 +15,7 @@ const userController = {
 
     update: async (req, res) => {
         const id = req.userId;
-        const { email, nickname, tags } = req.body;
+        const { nickname, tags } = req.body;
 
         try {
             const options = tags
@@ -29,13 +29,13 @@ const userController = {
                 }
                 : null;
 
-            const user = await User.findByPk(id, options);
+            const user = await User.findOne({ where: { authid: id}, options});
 
             if (!user) {
                 return res.status(400).json({ message: "No user found." });
             }
 
-            await user.update({ email, nickname });
+            await user.update({ nickname });
 
             if (tags) {
                 await user.setTags(tags);
@@ -51,12 +51,14 @@ const userController = {
     },
 
     updateAvatar: async (req, res) => {
-        const id = req.userId;
+        const authid = req.userId;
         const { avatar } = req.body;
 
         try {
 
-            const user = await User.findByPk(id);
+            const user = await User.findOne({
+                where: { authid}
+            });
 
             if (!user) {
                 return res.status(400).json({ message: "No user found." });
@@ -117,7 +119,7 @@ const userController = {
         const id = req.userId;
         try {
             // delete the user
-            const deleted = await User.destroy({ where: { id } });
+            const deleted = await User.destroy({ where: { authid: id } });
 
             if (deleted === 0) {
                 return res
@@ -140,7 +142,10 @@ const userController = {
 
     profile: async (req, res) => {
         try {
-            const user = await User.findByPk(req.userId, {
+            const user = await User.findOne({
+                where: {
+                    authid: req.userId
+                }, 
                 include: {
                     association: "tags",
                     through: {
@@ -148,7 +153,6 @@ const userController = {
                     },
                 },
             });
-
             res.status(200).json(user);
         } catch (error) {
             const message = error.parent?.detail || error.message
@@ -156,7 +160,32 @@ const userController = {
         }
     },
 
+    newProfile: async (req, res) => {
+        try {
+            const { nickname } = req.body;
+            const { userId } = req;
+
+            if (!nickname || ! userId) {
+                return res.status(412).json({
+                        message: "Missing data"
+                    });
+            }
+
+            const newUser = await User.create({
+                nickname,
+                authid: userId
+            });
+
+            return res.json(newUser);
+        } catch (error) {
+            const message = error.parent?.detail || error.message
+            console.log(error);
+            res.status(500).json({ message });
+        }
+    },
+    
     getUserChannels: async (req, res) => {
+        console.log("channels user", req.userId);
         try {
             const channels = await Channel.findAll({
                 attributes: ["id", "title", "img_url",
@@ -189,6 +218,7 @@ const userController = {
             res.status(200).json(channels);
         } catch (error) {
             const message = error.parent?.detail || error.message
+            console.log(error);
             res.status(500).json({ message });
         }
     },
@@ -211,8 +241,12 @@ const userController = {
     },
 
     getRecommendedChannels: async (req, res) => {
+        console.log('reco user id', req.userId);
         try {
-            const user = await User.findByPk(req.userId, {
+            const user = await User.findOne({
+                where: {
+                    authid: req.userId
+                },
                 attributes: ["id"],
                 include: [{
                     association: "channels",
@@ -228,7 +262,7 @@ const userController = {
                     attributes: ['id']
                 }]
             });
-
+console.log(user);
             const recommendedChannels = user.tags.length ?
                 await Channel.findAll({
                     attributes: ["id", "title", "img_url",

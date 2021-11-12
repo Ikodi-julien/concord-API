@@ -3,6 +3,7 @@ const router = Router();
 
 const { channelController, tagController, userController } = require("../controllers");
 
+router.post('/me', userController.newProfile)
 router.get('/me', userController.profile)
 // [put] route for update user
 router.put('/me', userController.update);

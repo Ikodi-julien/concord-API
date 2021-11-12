@@ -9,7 +9,7 @@
     "generate-db": "node ./data/db-generate.js",
     "start": "node index.js",
     "start-new-db": "node ./data/db-generate.js && node index.js",
-    "dev": "node index.js"
+    "dev": "pm2 start ./index.js --watch -n concord-8002"
   },
   "author": "VainKate & guillaume67450",
   "license": "ISC",
