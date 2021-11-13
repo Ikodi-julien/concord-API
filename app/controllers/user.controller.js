@@ -13,10 +13,33 @@ const userController = {
      * @returns
      */
 
-    update: async (req, res) => {
-        const id = req.userId;
-        const { nickname, tags } = req.body;
+    updateMe: async (req, res) => {
+        const {user} = req;
+        // const { nickname, email } = req.body;
 
+        try {
+            const userData = await User.findOne({ where: { authid: user.id} });
+
+            if (!userData) {
+                return res.status(400).json({ message: "No user found." });
+            }
+
+            await userData.update({ nickname: user.nickname, email: user.email });
+
+            await userData.save();
+
+            res.status(200).json(userData);
+        } catch (error) {
+            const message = error.parent?.detail || error.message;
+            res.status(500).json({ message });
+        }
+    },
+    
+    
+    updateMeTags: async (req, res) => {
+        const {user} = req;
+        const { tags } = req.body;
+console.log(req.body);
         try {
             const options = tags
                 ? {
@@ -29,29 +52,27 @@ const userController = {
                 }
                 : null;
 
-            const user = await User.findOne({ where: { authid: id}, options});
+            const userSql = await User.findOne({ where: { authid: user.id}, options});
 
-            if (!user) {
+            if (!userSql) {
                 return res.status(400).json({ message: "No user found." });
             }
 
-            await user.update({ nickname });
-
             if (tags) {
-                await user.setTags(tags);
+                await userSql.setTags(tags);
             }
 
-            await user.reload();
+            await userSql.save();
 
-            res.status(200).json(user);
+            res.status(200).json(userSql);
         } catch (error) {
-            const message = error.parent.detail || error.message;
+            const message = error.parent?.detail || error.message;
             res.status(500).json({ message });
         }
     },
 
     updateAvatar: async (req, res) => {
-        const authid = req.userId;
+        const authid = req.user.id;
         const { avatar } = req.body;
 
         try {
@@ -85,7 +106,7 @@ const userController = {
                 .json({ message: 'Current or new password is missing.' });
         }
 
-        const id = req.userId;
+        const id = req.user.id;
 
         try {
             const user = await User.scope('withPassword').findByPk(id);
@@ -116,7 +137,7 @@ const userController = {
 
     delete: async (req, res) => {
         // store id in a const with incoming request parameters id
-        const id = req.userId;
+        const id = req.user.id;
         try {
             // delete the user
             const deleted = await User.destroy({ where: { authid: id } });
@@ -144,7 +165,7 @@ const userController = {
         try {
             const user = await User.findOne({
                 where: {
-                    authid: req.userId
+                    authid: req.user.id
                 }, 
                 include: {
                     association: "tags",
@@ -153,6 +174,8 @@ const userController = {
                     },
                 },
             });
+            if (!user) return userController.newProfile(req, res)
+            
             res.status(200).json(user);
         } catch (error) {
             const message = error.parent?.detail || error.message
@@ -162,18 +185,17 @@ const userController = {
 
     newProfile: async (req, res) => {
         try {
-            const { nickname } = req.body;
-            const { userId } = req;
+            const { user } = req;
 
-            if (!nickname || ! userId) {
+            if (! user.id) {
                 return res.status(412).json({
                         message: "Missing data"
                     });
             }
 
             const newUser = await User.create({
-                nickname,
-                authid: userId
+                nickname: user.nickname,
+                authid: user.id
             });
 
             return res.json(newUser);
@@ -185,7 +207,7 @@ const userController = {
     },
     
     getUserChannels: async (req, res) => {
-        console.log("channels user", req.userId);
+        // console.log("channels user", req.user.id);
         try {
             const channels = await Channel.findAll({
                 attributes: ["id", "title", "img_url",
@@ -210,7 +232,7 @@ const userController = {
                 ],
                 where: {
                     id: {
-                        [Op.in]: Sequelize.literal(`(SELECT channel_id FROM user_has_channel WHERE user_id = ${req.userId})`)
+                        [Op.in]: Sequelize.literal(`(SELECT channel_id FROM user_has_channel WHERE user_id = ${req.user.id})`)
                     }
                 }
             });
@@ -231,7 +253,7 @@ const userController = {
                 return res.status(404).json({ message: `Channel not found` })
             };
 
-            await channel.removeUser(req.userId);
+            await channel.removeUser(req.user.id);
 
             res.status(200).json({ message: 'Channel removed successfully' });
         } catch (error) {
@@ -241,11 +263,11 @@ const userController = {
     },
 
     getRecommendedChannels: async (req, res) => {
-        console.log('reco user id', req.userId);
+        // console.log('reco user id', req.user.id);
         try {
             const user = await User.findOne({
                 where: {
-                    authid: req.userId
+                    authid: req.user.id
                 },
                 attributes: ["id"],
                 include: [{
@@ -262,7 +284,7 @@ const userController = {
                     attributes: ['id']
                 }]
             });
-console.log(user);
+
             const recommendedChannels = user.tags.length ?
                 await Channel.findAll({
                     attributes: ["id", "title", "img_url",
