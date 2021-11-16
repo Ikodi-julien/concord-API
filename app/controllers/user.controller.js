@@ -35,7 +35,6 @@ const userController = {
         }
     },
     
-    
     updateMeTags: async (req, res) => {
         const {user} = req;
         const { tags } = req.body;
@@ -186,7 +185,7 @@ console.log(req.body);
     newProfile: async (req, res) => {
         try {
             const { user } = req;
-
+            console.log('user dans new profil', user);
             if (! user.id) {
                 return res.status(412).json({
                         message: "Missing data"
