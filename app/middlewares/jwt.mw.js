@@ -10,7 +10,7 @@ module.exports = {
     
     try {
       const accessTokenPayload = jwt.verify(accessToken, JWT_SECRET);
-      console.log('payload dans jwt mid', accessTokenPayload);
+      // console.log('payload dans jwt mid', accessTokenPayload);
       
       const [newAccessToken, newRefreshToken] = jwtService.getTokens({
         id: accessTokenPayload.id,
@@ -64,7 +64,6 @@ module.exports = {
   },
   verifyLogout: (req, res, next) => {
     const accessToken = req.cookies.access_token || "";
-    // const refreshToken = req.cookies.refresh_token || "";
     // console.log(accessToken, refreshToken)
     
     try {

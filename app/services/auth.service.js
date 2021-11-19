@@ -4,8 +4,6 @@ const asyncClient = require('../redisClient');
 
 
 const PREFIX = "concord:";
-// use the command underneath to generate a jwt secret key and then, store it your own .env
-// node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
 const JWT_SECRET = require('./JWT_SECRET');
 
 const jwtExpiration = 60 * 60; // 1hour

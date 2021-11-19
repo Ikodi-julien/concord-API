@@ -38,7 +38,6 @@ const userController = {
     updateMeTags: async (req, res) => {
         const {user} = req;
         const { tags } = req.body;
-console.log(req.body);
         try {
             const options = tags
                 ? {
@@ -185,7 +184,6 @@ console.log(req.body);
     newProfile: async (req, res) => {
         try {
             const { user } = req;
-            console.log('user dans new profil', user);
             if (! user.id) {
                 return res.status(412).json({
                         message: "Missing data"
@@ -200,7 +198,7 @@ console.log(req.body);
             return res.json(newUser);
         } catch (error) {
             const message = error.parent?.detail || error.message
-            console.log(error);
+            // console.log(error);
             res.status(500).json({ message });
         }
     },
@@ -239,7 +237,7 @@ console.log(req.body);
             res.status(200).json(channels);
         } catch (error) {
             const message = error.parent?.detail || error.message
-            console.log(error);
+            // console.log(error);
             res.status(500).json({ message });
         }
     },

@@ -49,7 +49,7 @@ const channelController = {
             });
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             const message = error.parent?.detail || error.message
             res.status(500).json({ message });
         }
