@@ -5,7 +5,7 @@ module.exports = {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      domain : /\.ikodi.eu\/?$/
+      domain : "ikodi.eu"
     }
     :
     {
