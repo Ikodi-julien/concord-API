@@ -35,6 +35,7 @@ const io = new Server(httpServer,
 );
 
 app.use(express.json());
+app.use(express.static('app/public'));
 app.use(apiRouter);
 
 io.on('connection', socket => {
