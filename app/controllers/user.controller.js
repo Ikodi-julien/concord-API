@@ -1,341 +1,370 @@
 const { User, Tag, Channel } = require("../models");
-const { Op, Sequelize } = require('sequelize');
-const cookieService = require('../services/cookie.service');
+const { Op, Sequelize } = require("sequelize");
+const cookieService = require("../services/cookie.service");
 
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 
 const userController = {
-    /**
-     *
-     * @param {json} req.body
-     * @param {json} res.json
-     * @returns
-     */
+  /**
+   *
+   * @param {json} req.body
+   * @param {json} res.json
+   * @returns
+   */
 
-    updateMe: async (req, res) => {
-        const {user} = req;
-        // const { nickname, email } = req.body;
+  updateMe: async (req, res) => {
+    const { user } = req;
+    // const { nickname, email } = req.body;
 
-        try {
-            const userData = await User.findOne({ where: { authid: user.id} });
+    try {
+      const userData = await User.findOne({ where: { authid: user.id } });
 
-            if (!userData) {
-                return res.status(400).json({ message: "No user found." });
-            }
+      if (!userData) {
+        return res.status(400).json({ message: "No user found." });
+      }
 
-            await userData.update({ nickname: user.nickname, email: user.email });
+      await userData.update({ nickname: user.nickname, email: user.email });
 
-            await userData.save();
+      await userData.save();
 
-            res.status(200).json(userData);
-        } catch (error) {
-            const message = error.parent?.detail || error.message;
-            res.status(500).json({ message });
-        }
-    },
-    
-    updateMeTags: async (req, res) => {
-        const {user} = req;
-        const { tags } = req.body;
-        try {
-            const options = tags
-                ? {
-                    include: {
-                        association: "tags",
-                        through: {
-                            attributes: [],
-                        },
-                    },
-                }
-                : null;
+      res.status(200).json(userData);
+    } catch (error) {
+      const message = error.parent?.detail || error.message;
+      res.status(500).json({ message });
+    }
+  },
 
-            const userSql = await User.findOne({ where: { authid: user.id}, options});
+  updateMeTags: async (req, res) => {
+    const { user } = req;
+    const { tags } = req.body;
+    try {
+      const options = tags
+        ? {
+            include: {
+              association: "tags",
+              through: {
+                attributes: [],
+              },
+            },
+          }
+        : null;
 
-            if (!userSql) {
-                return res.status(400).json({ message: "No user found." });
-            }
+      const userSql = await User.findOne({
+        where: { authid: user.id },
+        options,
+      });
 
-            if (tags) {
-                await userSql.setTags(tags);
-            }
+      if (!userSql) {
+        return res.status(400).json({ message: "No user found." });
+      }
 
-            await userSql.save();
+      if (tags) {
+        await userSql.setTags(tags);
+      }
 
-            res.status(200).json(userSql);
-        } catch (error) {
-            const message = error.parent?.detail || error.message;
-            res.status(500).json({ message });
-        }
-    },
+      await userSql.save();
 
-    updateAvatar: async (req, res) => {
-        const authid = req.user.id;
-        const { avatar } = req.body;
+      res.status(200).json(userSql);
+    } catch (error) {
+      const message = error.parent?.detail || error.message;
+      res.status(500).json({ message });
+    }
+  },
 
-        try {
+  updateAvatar: async (req, res) => {
+    const authid = req.user.id;
+    const { avatar } = req.body;
 
-            const user = await User.findOne({
-                where: { authid}
-            });
+    try {
+      const user = await User.findOne({
+        where: { authid },
+      });
 
-            if (!user) {
-                return res.status(400).json({ message: "No user found." });
-            }
+      if (!user) {
+        return res.status(400).json({ message: "No user found." });
+      }
 
-            await user.update({ avatar });
+      await user.update({ avatar });
 
-            await user.reload();
+      await user.reload();
 
-            res.status(200).json(user);
-        } catch (error) {
-            const message = error.parent.detail || error.message;
-            res.status(500).json({ message });
-        }
-    },
+      res.status(200).json(user);
+    } catch (error) {
+      const message = error.parent.detail || error.message;
+      res.status(500).json({ message });
+    }
+  },
 
-    updatePassword: async (req, res) => {
-        // on récupère l'ancien mot de passe dans req.body
-        const { password, newPassword } = req.body;
+  updatePassword: async (req, res) => {
+    // on récupère l'ancien mot de passe dans req.body
+    const { password, newPassword } = req.body;
 
-        if (!password || !newPassword) {
-            return res
-                .status(409)
-                .json({ message: 'Current or new password is missing.' });
-        }
+    if (!password || !newPassword) {
+      return res
+        .status(409)
+        .json({ message: "Current or new password is missing." });
+    }
 
-        const id = req.user.id;
+    const id = req.user.id;
 
-        try {
-            const user = await User.scope('withPassword').findByPk(id);
-            const isPasswordValid = await bcrypt.compare(password, user.password);
+    try {
+      const user = await User.scope("withPassword").findByPk(id);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
 
-            if (!isPasswordValid) {
-                return res
-                    .status(409)
-                    .json({ message: 'The current password is incorrect' });
-            }
+      if (!isPasswordValid) {
+        return res
+          .status(409)
+          .json({ message: "The current password is incorrect" });
+      }
 
-            const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+      const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
 
-            user.password = hashedPassword;
-            await user.save();
+      user.password = hashedPassword;
+      await user.save();
 
-            await jwtService.deleteAllRefreshToken(id);
+      await jwtService.deleteAllRefreshToken(id);
 
-            res.clearCookie("access_token", cookieService.options);
-            res.clearCookie("refresh_token", cookieService.options);
+      res.clearCookie("access_token", cookieService.options);
+      res.clearCookie("refresh_token", cookieService.options);
 
-            return res.status(200).json({ message: 'Password updated' });
-        } catch (error) {
-            const message = error.parent?.detail || error.message
-            res.status(500).json({ message });
-        }
-    },
+      return res.status(200).json({ message: "Password updated" });
+    } catch (error) {
+      const message = error.parent?.detail || error.message;
+      res.status(500).json({ message });
+    }
+  },
 
-    delete: async (req, res) => {
-        // store id in a const with incoming request parameters id
-        const id = req.user.id;
-        try {
-            // delete the user
-            const deleted = await User.destroy({ where: { authid: id } });
+  delete: async (req, res) => {
+    // store id in a const with incoming request parameters id
+    const id = req.user.id;
+    try {
+      // delete the user
+      const deleted = await User.destroy({ where: { authid: id } });
 
-            if (deleted === 0) {
-                return res
-                    .status(404)
-                    .json({
-                        message:
-                            "This user does not exist or is already deleted",
-                    });
-            }
+      if (deleted === 0) {
+        return res.status(404).json({
+          message: "This user does not exist or is already deleted",
+        });
+      }
 
-            // send a 200 status and a message to show that user has been deleted
-            res.status(200).json({
-                message: `User account successfully deleted`,
-            });
-        } catch (error) {
-            const message = error.parent?.detail || error.message
-            res.status(500).json({ message });
-        }
-    },
+      // send a 200 status and a message to show that user has been deleted
+      res.status(200).json({
+        message: `User account successfully deleted`,
+      });
+    } catch (error) {
+      const message = error.parent?.detail || error.message;
+      res.status(500).json({ message });
+    }
+  },
 
-    profile: async (req, res) => {
-        try {
-            const user = await User.findOne({
-                where: {
-                    authid: req.user.id
-                }, 
-                include: {
-                    association: "tags",
-                    through: {
-                        attributes: [],
-                    },
+  profile: async (req, res) => {
+    try {
+      const user = await User.findOne({
+        where: {
+          authid: req.user.id,
+        },
+        include: {
+          association: "tags",
+          through: {
+            attributes: [],
+          },
+        },
+      });
+      if (!user) return userController.newProfile(req, res);
+
+      res.status(200).json(user);
+    } catch (error) {
+      userController.newProfile(req, res);
+      console.log("profile error", error);
+    }
+  },
+
+  newProfile: async (req, res) => {
+    try {
+      const { user } = req;
+      if (!user.id) {
+        return res.status(412).json({
+          message: "Missing data",
+        });
+      }
+
+      const newUser = await User.create({
+        nickname: user.nickname,
+        authid: user.id,
+      });
+
+      return res.json(newUser);
+    } catch (error) {
+      const message = error.parent?.detail || error.message;
+      // console.log(error);
+      res.status(500).json({ message });
+    }
+  },
+
+  getUserChannels: async (req, res) => {
+    // console.log("channels user", req.user.id);
+    try {
+      const channels = await Channel.findAll({
+        attributes: [
+          "id",
+          "title",
+          "img_url",
+          "rank",
+          "plot",
+          "year",
+          [Sequelize.fn("COUNT", Sequelize.col("users")), "usersCount"],
+        ],
+        group: ["Channel.id", "tags.id"],
+        include: [
+          {
+            association: "users",
+            through: {
+              attributes: [],
+            },
+            attributes: [],
+          },
+          {
+            association: "tags",
+            through: {
+              attributes: [],
+            },
+            attributes: ["id", "name"],
+          },
+        ],
+        where: {
+          id: {
+            [Op.in]: Sequelize.literal(
+              `(SELECT channel_id FROM user_has_channel WHERE user_id = ${req.user.id})`
+            ),
+          },
+        },
+      });
+
+      res.status(200).json(channels);
+    } catch (error) {
+      const message = error.parent?.detail || error.message;
+      // console.log(error);
+      res.status(500).json({ message });
+    }
+  },
+
+  removeJoinedChannel: async (req, res) => {
+    try {
+      const channel = await Channel.findByPk(req.params.id);
+
+      if (!channel) {
+        return res.status(404).json({ message: `Channel not found` });
+      }
+
+      await channel.removeUser(req.user.id);
+
+      res.status(200).json({ message: "Channel removed successfully" });
+    } catch (error) {
+      const message = error.parent?.detail || error.message;
+      res.status(500).json({ message });
+    }
+  },
+
+  getRecommendedChannels: async (req, res) => {
+    // console.log('reco user id', req.user.id);
+    try {
+      const user = await User.findOne({
+        where: {
+          authid: req.user.id,
+        },
+        attributes: ["id"],
+        include: [
+          {
+            association: "channels",
+            through: {
+              attributes: [],
+            },
+            attributes: ["id"],
+          },
+          {
+            association: "tags",
+            through: {
+              attributes: [],
+            },
+            attributes: ["id"],
+          },
+        ],
+      });
+
+      const recommendedChannels = user.tags.length
+        ? await Channel.findAll({
+            attributes: [
+              "id",
+              "title",
+              "img_url",
+              "rank",
+              "plot",
+              "year",
+              [Sequelize.fn("COUNT", Sequelize.col("users")), "usersCount"],
+            ],
+            include: [
+              {
+                association: "users",
+                through: {
+                  attributes: [],
                 },
-            });
-            if (!user) return userController.newProfile(req, res)
-            
-            res.status(200).json(user);
-        } catch (error) {
-            const message = error.parent?.detail || error.message
-            res.status(500).json({ message });
-        }
-    },
-
-    newProfile: async (req, res) => {
-        try {
-            const { user } = req;
-            if (! user.id) {
-                return res.status(412).json({
-                        message: "Missing data"
-                    });
-            }
-
-            const newUser = await User.create({
-                nickname: user.nickname,
-                authid: user.id
-            });
-
-            return res.json(newUser);
-        } catch (error) {
-            const message = error.parent?.detail || error.message
-            // console.log(error);
-            res.status(500).json({ message });
-        }
-    },
-    
-    getUserChannels: async (req, res) => {
-        // console.log("channels user", req.user.id);
-        try {
-            const channels = await Channel.findAll({
-                attributes: ["id", "title", "img_url",
-                    "rank", "plot", "year",
-                [Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
-                group: ["Channel.id", "tags.id"],
-                include: [
-                    {
-                        association: "users",
-                        through: {
-                            attributes: [],
-                        },
-                        attributes: []
-                    },
-                    {
-                        association: "tags",
-                        through: {
-                            attributes: [],
-                        },
-                        attributes: ['id', 'name']
-                    }
+                attributes: [],
+              },
+              {
+                association: "tags",
+                through: {
+                  attributes: [],
+                },
+                attributes: ["id", "name"],
+              },
+            ],
+            group: ["Channel.id", "tags.id"],
+            where: {
+              id: {
+                [Op.and]: [
+                  {
+                    [Op.notIn]: user.channels.map(({ id }) => id),
+                  },
+                  {
+                    [Op.in]: Sequelize.literal(
+                      `(SELECT channel_id FROM channel_has_tag WHERE tag_id in (${user.tags.map(
+                        ({ id }) => id
+                      )}))`
+                    ),
+                  },
                 ],
-                where: {
-                    id: {
-                        [Op.in]: Sequelize.literal(`(SELECT channel_id FROM user_has_channel WHERE user_id = ${req.user.id})`)
-                    }
-                }
-            });
+              },
+            },
+          })
+        : [];
 
-            res.status(200).json(channels);
-        } catch (error) {
-            const message = error.parent?.detail || error.message
-            // console.log(error);
-            res.status(500).json({ message });
+      if (recommendedChannels.length) {
+        for (const channel of recommendedChannels) {
+          for (const tag of channel.tags) {
+            tag.matchingTag = user.tags.find(
+              (userTag) => userTag.dataValues.id === tag.id
+            )
+              ? true
+              : false;
+          }
         }
-    },
 
-    removeJoinedChannel: async (req, res) => {
-        try {
-            const channel = await Channel.findByPk(req.params.id);
+        recommendedChannels.sort((a, b) => {
+          return (
+            b.tags.filter((tag) => tag.matchingTag).length -
+            a.tags.filter((tag) => tag.matchingTag).length
+          );
+        });
+      }
 
-            if (!channel) {
-                return res.status(404).json({ message: `Channel not found` })
-            };
-
-            await channel.removeUser(req.user.id);
-
-            res.status(200).json({ message: 'Channel removed successfully' });
-        } catch (error) {
-            const message = error.parent?.detail || error.message
-            res.status(500).json({ message });
-        }
-    },
-
-    getRecommendedChannels: async (req, res) => {
-        // console.log('reco user id', req.user.id);
-        try {
-            const user = await User.findOne({
-                where: {
-                    authid: req.user.id
-                },
-                attributes: ["id"],
-                include: [{
-                    association: "channels",
-                    through: {
-                        attributes: []
-                    },
-                    attributes: ['id']
-                }, {
-                    association: "tags",
-                    through: {
-                        attributes: []
-                    },
-                    attributes: ['id']
-                }]
-            });
-
-            const recommendedChannels = user.tags.length ?
-                await Channel.findAll({
-                    attributes: ["id", "title", "img_url",
-                        "rank", "plot", "year",
-                        [Sequelize.fn("COUNT", Sequelize.col('users')), "usersCount"]],
-                    include: [
-                        {
-                            association: "users",
-                            through: {
-                                attributes: []
-                            },
-                            attributes: []
-                        },
-                        {
-                            association: "tags",
-                            through: {
-                                attributes: []
-                            },
-                            attributes: ["id", "name"]
-                        }
-                    ],
-                    group: ["Channel.id", "tags.id"],
-                    where: {
-                        id: {
-                            [Op.and]: [{
-                                [Op.notIn]: user.channels.map(({ id }) => id)
-                            }, {
-                                [Op.in]: Sequelize.literal(
-                                    `(SELECT channel_id FROM channel_has_tag WHERE tag_id in (${user.tags.map(({ id }) => id)}))`)
-                            }]
-                        }
-                    }
-                }) :
-                [];
-
-            if (recommendedChannels.length) {
-                for (const channel of recommendedChannels) {
-                    for (const tag of channel.tags) {
-                        tag.matchingTag = user.tags.find(userTag => userTag.dataValues.id === tag.id) ? true : false;
-                    }
-                };
-
-                recommendedChannels.sort((a, b) => {
-                    return b.tags.filter(tag => tag.matchingTag).length - a.tags.filter(tag => tag.matchingTag).length
-                })
-            }
-
-            res.status(200).json(recommendedChannels);
-        } catch (error) {
-            console.error(error)
-            const message = error.parent?.detail || error.message
-            res.status(500).json({ message });
-        }
-    },
+      res.status(200).json(recommendedChannels);
+    } catch (error) {
+      console.error(error);
+      const message = error.parent?.detail || error.message;
+      res.status(500).json({ message });
+    }
+  },
 };
 
 module.exports = userController;
