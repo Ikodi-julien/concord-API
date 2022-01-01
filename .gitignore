@@ -2,3 +2,4 @@ node_modules
 dump.rdb
 google_key_local.json
 tests
+.env

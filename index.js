@@ -14,7 +14,7 @@ const app = express();
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' ?
         [/\.ikodi\.eu\/?$/] :
-        ['http://localhost:8080', 'http://localhost:8000'],
+        [/^http:\/\/localhost\:\d{4}$/],
     credentials: true
 }
 app.use(cors(corsOptions));
@@ -38,7 +38,8 @@ const io = new Server(httpServer,
 );
 
 app.use(express.json());
-app.use('/v2', apiRouter);
+app.use(express.static('app/public'));
+app.use(apiRouter);
 
 io.on('connection', socket => {
     socketHandler.auth(socket, io);
@@ -46,6 +47,6 @@ io.on('connection', socket => {
     socketHandler.disconnecting(socket, io);
 })
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
-httpServer.listen(PORT, () => console.log(`Serveur running on http://localhost:${PORT}`));
+httpServer.listen(PORT, () => console.log(`Concord-server-backend running on http://localhost:${PORT}`));

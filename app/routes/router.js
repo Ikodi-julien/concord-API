@@ -1,19 +1,19 @@
 const { Router } = require("express");
 const router = Router();
+const {resolve} =require('path');
 
-const { authController, tagController } = require("../controllers");
-const verifyJWT = require('../middlewares/auth.middleware');
+const { tagController } = require("../controllers");
+const jwtMW = require('../middlewares/jwt.mw');
 const privateRoutes = require('./private.route');
 
+/*------------------------*/
+// All app urls lead to landing page to avoid error 404 at refresh
+router.get(['/', '/home', '/profile', '/discovery', '/error'], (req, res) => {
+  res.sendFile(resolve(`./app/public/index.html`));
+});
 
-// [post] route for signup registration
-router.post("/signup", authController.signup);
-router.post("/login", authController.login);
-router.post('/logout', authController.logout);
-
-// Keep in public route ?
 router.get('/tags', tagController.getAllTags);
 
-router.use(verifyJWT, privateRoutes);
+router.use(jwtMW.verify, privateRoutes);
 
 module.exports = router;

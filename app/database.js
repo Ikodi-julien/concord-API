@@ -32,7 +32,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, options);
 (async _ => {
     try {
         await sequelize.authenticate();
-        console.log('Connection to Postgres has been established successfully.');
+        console.log('Connection to PgSQL Concord has been established successfully.');
     }
     catch (error) {
         console.error('Unable to connect to the database:', error);

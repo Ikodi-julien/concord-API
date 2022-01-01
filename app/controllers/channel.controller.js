@@ -1,6 +1,7 @@
 const { Channel } = require("../models");
 const { Sequelize } = require('sequelize');
 const usersStatus = require('../services/usersStatus.service');
+const animeData = require('../../data/anim-data.json');
 
 const channelController = {
     getChannelById: async (req, res) => {
@@ -48,7 +49,7 @@ const channelController = {
             });
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             const message = error.parent?.detail || error.message
             res.status(500).json({ message });
         }
@@ -77,8 +78,8 @@ const channelController = {
                 ],
                 order : Sequelize.literal('"usersCount" DESC')
             });
-
-            return res.json(channels);
+            
+            return res.json([animeData[0], ...channels]);
 
         } catch (error) {
             const message = error.parent?.detail || error.message
