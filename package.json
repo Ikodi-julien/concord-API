@@ -8,7 +8,7 @@
     "generate-db": "node ./data/db-generate.js",
     "start": "NODE_ENV=production node index.js",
     "start-new-db": "node ./data/db-generate.js && node index.js",
-    "dev": "pm2 start ./index.js --watch -n concord-8002",
+    "dev": "pm2 start index.js --watch -n concord-8002",
     "deploy": "git pull && npm i && pm2 start ./index.js -n concord-api -- NODE_ENV=production"
   },
   "author": "VainKate, guillaume67450 and ikodi-julien",
