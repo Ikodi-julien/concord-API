@@ -203,7 +203,9 @@ const userController = {
   },
 
   getUserChannels: async (req, res) => {
-    // console.log("channels user", req.user.id);
+    const userId = req.query.userid;
+    console.log("channels req.user.id", req.user.id);
+    console.log("channels param userId", userId);
     try {
       const channels = await Channel.findAll({
         attributes: [
@@ -235,7 +237,7 @@ const userController = {
         where: {
           id: {
             [Op.in]: Sequelize.literal(
-              `(SELECT channel_id FROM user_has_channel WHERE user_id = ${req.user.id})`
+              `(SELECT channel_id FROM user_has_channel WHERE user_id = ${userId})`
             ),
           },
         },
@@ -250,6 +252,7 @@ const userController = {
   },
 
   removeJoinedChannel: async (req, res) => {
+    const userId = req.query.userid;
     try {
       const channel = await Channel.findByPk(req.params.id);
 
@@ -257,7 +260,7 @@ const userController = {
         return res.status(404).json({ message: `Channel not found` });
       }
 
-      await channel.removeUser(req.user.id);
+      await channel.removeUser(userId);
 
       res.status(200).json({ message: "Channel removed successfully" });
     } catch (error) {
