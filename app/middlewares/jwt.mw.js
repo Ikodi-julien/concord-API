@@ -52,10 +52,8 @@ module.exports = {
           next();
         } catch (error) {
           
-          res.status(401).json(error.name !== 'Error' ?
-          error :
-          {
-              "message": "Vous avez été déconnecté automatiquement après une longue période d'inactivité"
+          return res.status(401).json({
+              message: "Vous avez été déconnecté automatiquement après une longue période d'inactivité"
           })
         }
       }

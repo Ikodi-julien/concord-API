@@ -7,7 +7,7 @@
   {
     "test:integration": "mocha ./tests/integration.spec.js",
     "generate-db": "node ./data/db-generate.js",
-    "start": "node index.js",
+    "start": "NODE_ENV=production node index.js",
     "start-new-db": "node ./data/db-generate.js && node index.js",
     "dev": "pm2 start ./index.js --watch -n concord-8002"
   },

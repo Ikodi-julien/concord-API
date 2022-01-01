@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 const accessTokenLifeSpan = 3600;
-const refreshTokenLifeSpan = 3600;
+const refreshTokenLifeSpan = 3600*24*7;
 
 const jwtService = {
 

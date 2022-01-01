@@ -16,7 +16,7 @@ const auth = {
             httpOnly: true,
             sameSite: 'None',
             secure: true,
-            domain : 'concordapi.ikodi.eu'
+            domain : 'ikodi.eu'
         } :
         {
             httpOnly: true,
