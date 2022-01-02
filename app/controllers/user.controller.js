@@ -204,8 +204,8 @@ const userController = {
 
   getUserChannels: async (req, res) => {
     const userId = req.query.userid;
-    console.log("channels req.user.id", req.user.id);
-    console.log("channels param userId", userId);
+    // console.log("channels req.user.id", req.user.id);
+    // console.log("channels param userId", userId);
     try {
       const channels = await Channel.findAll({
         attributes: [
@@ -270,11 +270,12 @@ const userController = {
   },
 
   getRecommendedChannels: async (req, res) => {
+    const userId = req.query.userid;
     // console.log('reco user id', req.user.id);
     try {
       const user = await User.findOne({
         where: {
-          authid: req.user.id,
+          authid: userId,
         },
         attributes: ["id"],
         include: [
