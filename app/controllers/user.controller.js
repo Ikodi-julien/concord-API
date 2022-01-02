@@ -296,73 +296,76 @@ const userController = {
         ],
       });
 
-      const recommendedChannels = user.tags.length
-        ? await Channel.findAll({
-            attributes: [
-              "id",
-              "title",
-              "img_url",
-              "rank",
-              "plot",
-              "year",
-              [Sequelize.fn("COUNT", Sequelize.col("users")), "usersCount"],
-            ],
-            include: [
-              {
-                association: "users",
-                through: {
+      if (user) {
+        const recommendedChannels = user.tags.length
+          ? await Channel.findAll({
+              attributes: [
+                "id",
+                "title",
+                "img_url",
+                "rank",
+                "plot",
+                "year",
+                [Sequelize.fn("COUNT", Sequelize.col("users")), "usersCount"],
+              ],
+              include: [
+                {
+                  association: "users",
+                  through: {
+                    attributes: [],
+                  },
                   attributes: [],
                 },
-                attributes: [],
-              },
-              {
-                association: "tags",
-                through: {
-                  attributes: [],
+                {
+                  association: "tags",
+                  through: {
+                    attributes: [],
+                  },
+                  attributes: ["id", "name"],
                 },
-                attributes: ["id", "name"],
+              ],
+              group: ["Channel.id", "tags.id"],
+              where: {
+                id: {
+                  [Op.and]: [
+                    {
+                      [Op.notIn]: user.channels.map(({ id }) => id),
+                    },
+                    {
+                      [Op.in]: Sequelize.literal(
+                        `(SELECT channel_id FROM channel_has_tag WHERE tag_id in (${user.tags.map(
+                          ({ id }) => id
+                        )}))`
+                      ),
+                    },
+                  ],
+                },
               },
-            ],
-            group: ["Channel.id", "tags.id"],
-            where: {
-              id: {
-                [Op.and]: [
-                  {
-                    [Op.notIn]: user.channels.map(({ id }) => id),
-                  },
-                  {
-                    [Op.in]: Sequelize.literal(
-                      `(SELECT channel_id FROM channel_has_tag WHERE tag_id in (${user.tags.map(
-                        ({ id }) => id
-                      )}))`
-                    ),
-                  },
-                ],
-              },
-            },
-          })
-        : [];
+            })
+          : [];
 
-      if (recommendedChannels.length) {
-        for (const channel of recommendedChannels) {
-          for (const tag of channel.tags) {
-            tag.matchingTag = user.tags.find(
-              (userTag) => userTag.dataValues.id === tag.id
-            )
-              ? true
-              : false;
+        if (recommendedChannels.length) {
+          for (const channel of recommendedChannels) {
+            for (const tag of channel.tags) {
+              tag.matchingTag = user.tags.find(
+                (userTag) => userTag.dataValues.id === tag.id
+              )
+                ? true
+                : false;
+            }
           }
+
+          recommendedChannels.sort((a, b) => {
+            return (
+              b.tags.filter((tag) => tag.matchingTag).length -
+              a.tags.filter((tag) => tag.matchingTag).length
+            );
+          });
         }
 
-        recommendedChannels.sort((a, b) => {
-          return (
-            b.tags.filter((tag) => tag.matchingTag).length -
-            a.tags.filter((tag) => tag.matchingTag).length
-          );
-        });
+        res.status(200).json(recommendedChannels);
       }
-
-      res.status(200).json(recommendedChannels);
+      res.status(204).json({ message: "No user" });
     } catch (error) {
       console.error(error);
       const message = error.parent?.detail || error.message;
