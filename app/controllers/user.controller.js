@@ -204,8 +204,8 @@ const userController = {
 
   getUserChannels: async (req, res) => {
     const userId = req.query.userid;
-    console.log("channels req.user.id", req.user.id);
-    console.log("channels param userId", userId);
+    // console.log("channels req.user.id", req.user.id);
+    // console.log("channels param userId", userId);
     try {
       const channels = await Channel.findAll({
         attributes: [
