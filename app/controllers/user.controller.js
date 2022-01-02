@@ -270,11 +270,12 @@ const userController = {
   },
 
   getRecommendedChannels: async (req, res) => {
+    const userId = req.query.userid;
     // console.log('reco user id', req.user.id);
     try {
       const user = await User.findOne({
         where: {
-          authid: req.user.id,
+          authid: userId,
         },
         attributes: ["id"],
         include: [
