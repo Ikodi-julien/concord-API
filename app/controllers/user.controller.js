@@ -275,7 +275,7 @@ const userController = {
     try {
       const user = await User.findOne({
         where: {
-          authid: userId,
+          id: userId,
         },
         attributes: ["id"],
         include: [
