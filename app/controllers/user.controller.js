@@ -159,10 +159,11 @@ const userController = {
   },
 
   profile: async (req, res) => {
+    const { id } = req.user;
     try {
       const user = await User.findOne({
         where: {
-          authid: req.user.id,
+          authid: id,
         },
         include: {
           association: "tags",
@@ -204,8 +205,9 @@ const userController = {
 
   getUserChannels: async (req, res) => {
     const userId = req.query.userid;
-    // console.log("channels req.user.id", req.user.id);
     // console.log("channels param userId", userId);
+    if (userId === "-1") return res.sendStatus(204);
+
     try {
       const channels = await Channel.findAll({
         attributes: [
@@ -253,6 +255,8 @@ const userController = {
 
   removeJoinedChannel: async (req, res) => {
     const userId = req.query.userid;
+    if (userId === "-1") return res.sendStatus(204);
+
     try {
       const channel = await Channel.findByPk(req.params.id);
 
@@ -271,7 +275,9 @@ const userController = {
 
   getRecommendedChannels: async (req, res) => {
     const userId = req.query.userid;
-    // console.log('reco user id', req.user.id);
+    // console.log("userId in recos", userId);
+    if (userId === "-1") return res.sendStatus(204);
+
     try {
       const user = await User.findOne({
         where: {
